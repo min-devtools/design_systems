@@ -107,6 +107,7 @@ active gets `--pane-2` fill + border.
 | `.form-row` | `136px 1fr` label+input grid; focus = blue border + 3px ring |
 | `.check-row` | `18px 1fr auto` checkbox row, bordered |
 | `.combobox` + `.combobox-list` / `-item` / `-value` / `-hint` | Autocomplete dropdown on glass |
+| `select` (bare) | Every native `<select>` normalized to a combobox-style trigger: OS chevron replaced with a themed chevron; keeps native popup + a11y |
 | `.env-input` + `.env-input-token` / `-overlay` / `-suggestions` | Input that renders `{{env}}` vars as purple pills |
 | `.row-check` | 15px checkbox, `accent-color: var(--blue)` |
 
@@ -274,8 +275,7 @@ right-aligned.
 
 ## Progress & feedback
 
-- `.progress` / `.progress span` — 120px indeterminate bar (`@keyframes run`).
-- `.req-progress.on` — 2px loading bar pinned under a request header.
+- `.req-progress.on` — 2px indeterminate loading bar (`@keyframes run`), pinned under a request/editor header. Header container needs `position: relative`.
 - `.response.loading .response-body` — dim + lock while in flight.
 - `.empty-note` — centered muted empty state.
 - `.err-note` — red mono error block, wraps, selectable.
