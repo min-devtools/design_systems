@@ -214,7 +214,7 @@ body.resizing-y { cursor: row-resize; }
 .tab {
   height: 31px;
   min-width: 96px;
-  max-width: 190px;
+  max-width: 253px;
   flex: 0 1 auto;
   display: inline-flex;
   align-items: center;
