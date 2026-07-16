@@ -94,12 +94,31 @@
 
 /* Min Light: primary buttons (Send, New request) = brand purple with white text */
 body.light .tool-btn.primary {
-  color: #fff;
-  background: #7A3EED;
-  border-color: color-mix(in oklab, #7A3EED, transparent 40%);
+  color: var(--text-on-accent);
+  background: var(--accent);
+  border-color: color-mix(in oklab, var(--accent), transparent 40%);
 }
 
 .tool-btn.danger { color: var(--red); }
+
+body.light input,
+body.light select,
+body.light .search {
+  background: var(--control-bg);
+  border-color: var(--control-border);
+}
+
+body.light input:hover,
+body.light select:hover,
+body.light .tool-btn:hover {
+  background: var(--control-hover-bg);
+}
+
+body.light input:focus,
+body.light select:focus {
+  border-color: var(--control-focus-border);
+  box-shadow: 0 0 0 3px var(--control-focus-ring);
+}
 
 .nav-item, .index-item {
   display: grid;
@@ -147,6 +166,10 @@ body.light .tool-btn.primary {
 .badge.yellow { color: var(--orange); background: color-mix(in oklab, var(--orange), transparent 90%); }
 
 .badge.red { color: var(--red); background: color-mix(in oklab, var(--red), transparent 90%); }
+
+.badge.blue { color: var(--blue); background: color-mix(in oklab, var(--blue), transparent 90%); }
+
+.badge.purple { color: var(--purple); background: color-mix(in oklab, var(--purple), transparent 90%); }
 
 .badge.idle { color: var(--text-3); }
 
@@ -606,6 +629,8 @@ tbody tr:hover td, tbody tr.selected td { background: color-mix(in oklab, var(--
   font-size: 0.9231rem;
 }
 
+.health-line > span:last-child { white-space: nowrap; text-align: right; }
+
 .bar { height: 5px; background: var(--pane-3); border-radius: 999px; overflow: hidden; }
 
 .bar span { display: block; height: 100%; background: var(--green); }
@@ -835,6 +860,54 @@ tbody tr:hover td, tbody tr.selected td { background: color-mix(in oklab, var(--
   pointer-events: none;
   opacity: 0;
 }
+
+/* Unified loading bar — indeterminate by default, determinate with .determinate + --progress.
+   Parent must be positioned. Replaces per-app .loading-bar / .full-progress-track. */
+.loading-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+  z-index: 6;
+}
+
+.loading-bar.on { opacity: 1; }
+
+.loading-bar.bottom { inset: auto 0 0; }
+
+.loading-bar span {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 35%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  animation: loading-bar-slide 1.05s ease-in-out infinite;
+}
+
+@keyframes loading-bar-slide {
+  0% { left: -35%; }
+  100% { left: 100%; }
+}
+
+.loading-bar.determinate { background: var(--pane-3); }
+
+.loading-bar.determinate span {
+  left: 0;
+  width: calc(var(--progress, 0) * 100%);
+  border-radius: 0;
+  background: var(--blue);
+  animation: none;
+  transition: width 160ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-bar span { animation-duration: 2.2s; }
+}
+
 .req-progress.on { opacity: 1; background: var(--pane-3); }
 .req-progress span {
   position: absolute;
@@ -868,6 +941,30 @@ tbody tr:hover td, tbody tr.selected td { background: color-mix(in oklab, var(--
   grid-template-rows: minmax(0, 1fr) auto;
   background: var(--pane);
 }
+
+.ai-session-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--pane-2);
+}
+
+.ai-session-select {
+  min-width: 0;
+  height: 30px;
+  padding: 0 8px;
+  color: var(--text);
+  background: var(--pane);
+  border: 1px solid var(--line-2);
+  border-radius: 7px;
+  outline: none;
+  font: 0.8462rem/1 var(--font-body);
+}
+
+.ai-session-select:focus { border-color: var(--blue); }
 
 .ai-messages {
   min-height: 0;
@@ -987,6 +1084,11 @@ select {
   background-size: 11px 11px !important;
 }
 
+select:focus {
+  border-color: color-mix(in oklab, var(--blue), transparent 35%);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--blue), transparent 86%);
+}
+
 .combobox { position: relative; min-width: 0; }
 
 .combobox input {
@@ -1079,3 +1181,19 @@ td > span {
 .json-editor-tools > span:nth-child(2) { flex: 1; }
 .json-editor-tools button { height: 24px; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; color: var(--text-2); background: transparent; font: inherit; }
 .json-editor-tools button:hover { color: var(--text); border-color: var(--line); background: var(--pane-2); }
+
+.json-response-viewer { min-height: 0; height: 100%; display: flex; flex-direction: column; }
+.json-response-viewer .json-response-editor { flex: 1; min-height: 0; }
+.json-response-tools, .json-response-paths { display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-bottom: 1px solid var(--line); background: var(--pane); }
+.json-response-tools input { flex: 1; min-width: 0; height: 26px; padding: 0 8px; border: 1px solid var(--line); border-radius: 6px; outline: none; color: var(--text); background: var(--pane-2); font: .8462rem/1.4 var(--font-mono); }
+.json-response-tools button, .json-response-paths button { height: 26px; padding: 0 8px; border: 1px solid var(--line); border-radius: 6px; color: var(--text-2); background: transparent; font: .7692rem/1.4 var(--font-mono); }
+.json-response-tools button:hover, .json-response-path.active { color: var(--blue); border-color: color-mix(in oklab, var(--blue), transparent 55%); background: color-mix(in oklab, var(--blue), transparent 88%); }
+.json-response-paths { overflow-x: auto; padding-top: 4px; padding-bottom: 4px; }
+.json-response-path { display: inline-flex; align-items: center; flex: none; height: 26px; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; }
+.json-response-error { overflow: hidden; color: var(--red); font: .7692rem/1.4 var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+.json-response-tools button:disabled { opacity: .45; pointer-events: none; }
+.json-response-tools button.active, .json-response-tools button.active:hover { color: var(--blue); border-color: color-mix(in oklab, var(--blue), transparent 45%); background: color-mix(in oklab, var(--blue), transparent 84%); }
+.json-response-paths .json-response-path button { height: 24px; border: 0; border-radius: 0; }
+.json-response-paths .path-copy, .json-response-paths .path-remove { display: inline-flex; align-items: center; justify-content: center; width: 24px; padding: 0; color: var(--text-3); }
+.json-response-paths .path-copy:hover { color: var(--blue); background: color-mix(in oklab, var(--blue), transparent 85%); }
+.json-response-paths .path-remove:hover { color: var(--red); background: color-mix(in oklab, var(--red), transparent 85%); }

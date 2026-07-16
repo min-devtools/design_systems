@@ -6,7 +6,7 @@
   <title>Design System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="base.css" />
   <link rel="stylesheet" href="layout.css" />
@@ -101,6 +101,16 @@
       font-size: 12px;
       color: var(--text-2);
     }
+    body.light .ds-swatch,
+    body.light .ds-demo-panel,
+    body.light .ds-table-box {
+      box-shadow:
+        0 1px 2px color-mix(in oklab, var(--text), transparent 97.5%),
+        0 3px 10px color-mix(in oklab, var(--text), transparent 98.2%);
+    }
+    body.light .ds-demo-panel {
+      border-color: color-mix(in oklab, var(--text), transparent 91%);
+    }
   </style>
 </head>
 <body class="ds-body">
@@ -148,7 +158,7 @@
     <section class="ds-section" data-od-id="section-typography">
       <h2>Typography</h2>
       <div class="ds-demo-panel">
-        <p style="font-size: 13px; margin: 0 0 8px;">UI body — 13px/1.45 Exo 2</p>
+        <p style="font-size: 13px; margin: 0 0 8px;">UI body — 13px/1.45 Inter</p>
         <p style="font: 12px/1.75 var(--font-mono); color: var(--text-2); margin: 0;">Monospace — 12px/1.75 Google Sans Code</p>
       </div>
     </section>

@@ -1,2 +1,9 @@
 target/
 
+# local symlinks to sibling repos
+elatic_min
+requests_min
+kafka_ui_min
+redis_min
+
+.DS_Store

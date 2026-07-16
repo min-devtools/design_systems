@@ -1,7 +1,7 @@
 :root {
   /* Default dark = Bearded Arc (shared with elastic_min); light theme carries the #7A3EED purple */
   --accent: var(--blue);
-  --font-body-default: "Exo 2", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body-default: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono-default: "Google Sans Code", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
   --font-body: var(--font-body-default);
   --font-mono: var(--font-mono-default);
@@ -65,29 +65,57 @@
 }
 
 body.light {
-  --accent: #7A3EED;
-  --app-bg: #f9f8fa;
-  --window: #f9f8fa;
-  --pane: #ffffff;
-  --pane-2: #f0ecf4;
-  --pane-3: #efebf2;
-  --line: #efebf2;
-  --line-2: #e3ddea;
-  --text: #3b2e4c;
-  --text-2: #8c7c9e;
-  --text-3: #b1a6bd;
-  --blue: #7A3EED;
-  --blue-2: #7A3EED;
-  --green: #10b981;
-  --orange: #d97706;
-  --red: #f43f5e;
-  --purple: #7A3EED;
-  --row: #ffffff;
-  --row-alt: #f9f8fa;
-  --glass: rgba(255, 255, 255, 0.78);
-  --shadow: none;
-  --editor-bg: #ffffff;
-  --editor-fg: #3b2e4c;
+  color-scheme: light;
+
+  /* App surfaces */
+  --app-bg: #F6F7F9;
+  --window: #FFFFFF;
+  --pane: #FFFFFF;
+  --pane-2: #F9FAFB;
+  --pane-3: #ECEFF4;
+
+  /* Borders */
+  --line: #E0E4EB;
+  --line-2: #D4DAE4;
+
+  /* Typography */
+  --text: #131820;
+  --text-2: #4E607E;
+  --text-3: #7A8EAE;
+
+  /* --blue drives --accent (see :root); Yaak primary is purple */
+  --blue: #8B33FF;
+  --blue-2: #0074CC;
+  --purple: #A855F7;
+
+  /* Semantic colors */
+  --green: #1D9042;
+  --yellow: #AD8200;
+  --orange: #B85C00;
+  --red: #D61F6B;
+
+  /* Rows and interaction */
+  --row: rgba(19, 24, 32, 0.018);
+  --row-alt: rgba(19, 24, 32, 0.035);
+  --row-hover: #F0F2F6;
+
+  --selection: rgba(139, 51, 255, 0.16);
+  --focus: rgba(0, 116, 204, 0.36);
+  --control-bg: #FFFFFF;
+  --control-border: #DADFE7;
+  --control-hover-bg: #F3F5F8;
+  --control-focus-border: #8B33FF;
+  --control-focus-ring: rgba(139, 51, 255, 0.12);
+
+  /* Overlay */
+  --glass: rgba(255, 255, 255, 0.92);
+  --modal-backdrop: rgba(19, 24, 32, 0.22);
+  --shadow: rgba(0, 0, 0, 0.07);
+
+  /* Editor */
+  --editor-bg: #FFFFFF;
+  --editor-fg: #131820;
+
   /* Syntax colors tuned for contrast on white editor-bg (WCAG AA ~4.5:1+),
      not the accent palette above which is too light on white. */
   --syntax-key: #7c3aed;
