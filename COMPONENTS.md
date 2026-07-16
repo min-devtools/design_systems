@@ -280,6 +280,22 @@ right-aligned.
 - `.empty-note` — centered muted empty state.
 - `.err-note` — red mono error block, wraps, selectable.
 
+## Settings view (canonical across apps)
+
+`.settings-view` → `.settings-shell` (720px centered column) → `.settings-header` + `.settings-card`s + `.settings-credit`.
+
+| Class | Look |
+|-------|------|
+| `.settings-card` | Bordered 12px-radius card, `<h3>` title with divider |
+| `.settings-row` | `30px 1fr max-content` grid: icon / copy / control |
+| `.settings-icon` | 30px bordered icon tile, blue glyph |
+| `.settings-copy` | `<strong>` title + muted description |
+| `.settings-select` | 28px select/input, blue focus ring |
+| `.switch` | 38×22 toggle (checkbox inside `<label class="switch">` + empty `<span>`) — use for booleans, not `.row-check` |
+| `.shortcut-grid` / `.shortcut-row` | 2-col shortcut list, label left, `.kbd` right |
+
+Canonical Appearance card order: Theme → Interface font size (ToolButton `− / Npx / +` stepper; clicking the value resets) → Interface font family → Editor font family → Compact density → Vim mode. App-specific cards (AI provider, GitHub, Data) follow after.
+
 ## Utility
 
 - `.soft-blue` `.soft-green` `.soft-orange` `.soft-red` — text-color helpers.

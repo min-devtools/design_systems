@@ -18,16 +18,16 @@ Stacked from deepest background to raised hover. In dark, `--pane` equals
 | `--pane-2` | `#253043` | `#f0ecf4` | Inputs, raised cards, hovered nav rows |
 | `--pane-3` | `#2a364d` | `#efebf2` | Stronger hover / pressed / kbd pills |
 | `--editor-bg` | `#1c2433` | `#ffffff` | Code editor / JSON tree background |
-| `--editor-fg` | `#d0d7e4` | `#3b2e4c` | Editor text |
+| `--editor-fg` | `#d0d7e4` | `#3b1d7a` | Editor text |
 | `--glass` | `rgba(24,31,44,.82)` | `rgba(255,255,255,.78)` | Overlay/palette/menu backdrop |
 
 ## Text
 
 | Token | Dark | Light | Usage |
 |-------|------|-------|-------|
-| `--text` | `#d0d7e4` | `#3b2e4c` | Primary text |
-| `--text-2` | `#afbbd2` | `#8c7c9e` | Secondary text, labels |
-| `--text-3` | `#4a5e84` | `#b1a6bd` | Muted, placeholders, section titles |
+| `--text` | `#d0d7e4` | `#3b1d7a` | Primary text — light uses purple ink, not neutral black (12.8:1 on white, AAA) |
+| `--text-2` | `#afbbd2` | `#6533c7` | Secondary text, labels (7.4:1, AAA) |
+| `--text-3` | `#4a5e84` | `#9b85cf` | Muted, placeholders, section titles (~3.2:1, decorative/UI only) |
 
 ## Borders
 

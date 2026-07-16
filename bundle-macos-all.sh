@@ -2,11 +2,11 @@
 # Bundle _min Tauri apps (sequential) and copy the .app bundles into /Applications.
 # Usage: ./bundle-macos-all.sh              # all 4 apps
 #        ./bundle-macos-all.sh redis_min    # only redis_min
-#        ./bundle-macos-all.sh kafka_ui_min elatic_min
+#        ./bundle-macos-all.sh kafka_ui_min elastic_min
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-ALL_APPS=(elatic_min requests_min kafka_ui_min redis_min)
+ALL_APPS=(elastic_min requests_min kafka_ui_min redis_min)
 APPS=("${@:-${ALL_APPS[@]}}")
 
 log() { printf '\n\033[1;34m[%s]\033[0m %s\n' "$(date '+%H:%M:%S')" "$*"; }
@@ -24,8 +24,10 @@ for app in "${APPS[@]}"; do
     continue
   fi
 
-  log "$app: npm run tauri build"
-  if ! (cd "$dir" && npm run tauri build); then
+  # Per-app release version — single source of truth, also injected into the footer by vite.
+  VERSION="$(tr -d '[:space:]' < "$dir/VERSION")"
+  log "$app: npm run tauri build (v$VERSION)"
+  if ! (cd "$dir" && npm run tauri build -- --config "{\"version\":\"$VERSION\"}"); then
     log "!!! $app: build FAILED, continuing with next app"
     FAILED+=("$app (build failed)")
     continue

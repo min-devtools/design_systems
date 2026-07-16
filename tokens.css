@@ -78,10 +78,11 @@ body.light {
   --line: #E0E4EB;
   --line-2: #D4DAE4;
 
-  /* Typography */
-  --text: #131820;
-  --text-2: #4E607E;
-  --text-3: #7A8EAE;
+  /* Typography — purple ink, not neutral black: Yaak hue carries into the text
+     scale while staying AAA on white (12.8:1 / 7.4:1; text-3 muted ~3.2:1). */
+  --text: #3B1D7A;
+  --text-2: #6533C7;
+  --text-3: #9B85CF;
 
   /* --blue drives --accent (see :root); Yaak primary is purple */
   --blue: #8B33FF;
@@ -109,12 +110,12 @@ body.light {
 
   /* Overlay */
   --glass: rgba(255, 255, 255, 0.92);
-  --modal-backdrop: rgba(19, 24, 32, 0.22);
-  --shadow: rgba(0, 0, 0, 0.07);
+  --modal-backdrop: rgba(36, 26, 62, 0.25);
+  --shadow: rgba(59, 26, 110, 0.10);
 
   /* Editor */
   --editor-bg: #FFFFFF;
-  --editor-fg: #131820;
+  --editor-fg: #3B1D7A;
 
   /* Syntax colors tuned for contrast on white editor-bg (WCAG AA ~4.5:1+),
      not the accent palette above which is too light on white. */
