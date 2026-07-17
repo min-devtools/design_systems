@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vC: prism — one query in, facets out, one is the answer -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#31456b" stroke-width="13" stroke-linecap="round">
+    <path d="M84 256 H206"/>
+    <path d="M318 256 L424 168"/>
+    <path d="M318 256 H424"/>
+    <path d="M318 256 L424 344"/>
+  </g>
+  <path d="M212 190 L212 322 L326 256 Z" fill="#69C3FF"/>
+  <circle cx="140" cy="256" r="30" fill="#69C3FF"/>
+  <circle cx="424" cy="168" r="24" fill="#3CEC85"/>
+  <circle cx="424" cy="256" r="24" fill="#3a4f75"/>
+  <circle cx="424" cy="344" r="24" fill="#3a4f75"/>
+</svg>

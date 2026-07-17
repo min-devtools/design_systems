@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vA3: tail -f — old lines fade up, the newest line lands green at the bottom -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g fill="#3a4f75">
+    <rect x="110" y="112" width="200" height="28" rx="14" opacity="0.25"/>
+    <rect x="110" y="180" width="256" height="28" rx="14" opacity="0.45"/>
+    <rect x="110" y="248" width="170" height="28" rx="14" opacity="0.65"/>
+    <rect x="110" y="316" width="230" height="28" rx="14" opacity="0.85"/>
+  </g>
+  <rect x="110" y="384" width="280" height="32" rx="16" fill="#3CEC85"/>
+</svg>

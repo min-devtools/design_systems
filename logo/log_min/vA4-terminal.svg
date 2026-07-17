@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vA4: the log window — traffic-light dots up top, log lines below, one green -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g fill="#3a4f75">
+    <circle cx="118" cy="112" r="12"/><circle cx="154" cy="112" r="12"/><circle cx="190" cy="112" r="12"/>
+  </g>
+  <g fill="#3a4f75">
+    <rect x="106" y="168" width="230" height="28" rx="14"/>
+    <rect x="106" y="236" width="170" height="28" rx="14"/>
+    <rect x="106" y="372" width="200" height="28" rx="14"/>
+  </g>
+  <rect x="106" y="304" width="270" height="32" rx="16" fill="#3CEC85"/>
+</svg>

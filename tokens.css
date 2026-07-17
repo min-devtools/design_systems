@@ -1,10 +1,21 @@
+/* `:root, body`, not just `:root`: alias vars (--accent: var(--blue), …) substitute at
+   computed-value time on the element that declares them. Declared only on :root they freeze
+   to the dark base palette, and body-level theme overrides (body.light, body[data-theme])
+   never reach them. Re-declaring on body recomputes every alias with the themed values. */
+/* Font vars stay :root-only: apps set --font-body/--font-mono inline on documentElement
+   (App.tsx setProperty). Declared also on body, the body stylesheet value would shadow
+   that inherited inline value for the whole subtree — the Interface-font setting goes dead.
+   No theme overrides the -default stacks, so they don't need body-level recomputation. */
 :root {
-  /* Default dark = Bearded Arc (shared with elastic_min); light theme carries the #7A3EED purple */
-  --accent: var(--blue);
   --font-body-default: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono-default: "Google Sans Code", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
   --font-body: var(--font-body-default);
   --font-mono: var(--font-mono-default);
+}
+
+:root, body {
+  /* Default dark = Bearded Arc (shared with elastic_min); light theme carries the #7A3EED purple */
+  --accent: var(--blue);
 
   --app-bg: #1c2433;
   --window: #181f2c;

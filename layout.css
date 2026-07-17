@@ -65,9 +65,14 @@ body.left-collapsed .group-title,
 body.left-collapsed .nav-item > span:not(:first-child),
 body.left-collapsed .index-item > span:not(:first-child),
 body.left-collapsed .nav-item > .badge,
-body.left-collapsed .empty-note {
+body.left-collapsed .empty-note,
+body.left-collapsed .collection-requests {
   display: none;
 }
+
+/* ponytail: collapse all collections visually while the dock is collapsed;
+   per-collection state stays intact so re-expanding restores it. */
+body.left-collapsed .collection-tree .collection-chevron { transform: rotate(-90deg); }
 
 body.left-collapsed .side-scroll { height: 100%; padding: 6px; }
 body.left-collapsed .group { margin-bottom: 8px; }
@@ -355,6 +360,8 @@ body.compact .side-scroll { padding-top: 6px; }
 
 .inspector {
   display: grid;
+  /* 3 rows: head / MiniTabs / scroll — kafka_ui_min + redis_min need the middle auto row.
+     requests_min overrides .inspector to flex in requestsmin.css. */
   grid-template-rows: 55px auto minmax(0, 1fr);
 }
 .inspector .inspector-scroll { height: auto; min-height: 0; }

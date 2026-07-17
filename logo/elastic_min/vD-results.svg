@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vD: result list — rows of data, one row lit with its green hit marker -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="110" y="136" width="220" height="40" rx="20" fill="#3a4f75"/>
+  <rect x="110" y="236" width="220" height="40" rx="20" fill="#d0d7e4"/>
+  <rect x="110" y="336" width="220" height="40" rx="20" fill="#3a4f75"/>
+  <circle cx="392" cy="256" r="32" fill="#3CEC85"/>
+</svg>

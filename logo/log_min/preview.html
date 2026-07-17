@@ -1,0 +1,21 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>log_min logo preview</title>
+<style>
+  body { margin: 0; font: 14px/1.5 Inter, system-ui, sans-serif; }
+  .strip { display: flex; gap: 44px; padding: 32px 40px; align-items: flex-end; flex-wrap: wrap; }
+  .dark { background: #10151f; color: #d0d7e4; }
+  .light { background: #F6F7F9; color: #333; }
+  .variant { display: flex; flex-direction: column; gap: 8px; }
+  .variant .row { display: flex; gap: 20px; align-items: flex-end; }
+  .variant span { font-size: 12px; opacity: .7; }
+  img.lg { width: 150px; } img.md { width: 64px; } img.sm { width: 28px; }
+  h2 { padding: 24px 40px 0; margin: 0; font-size: 15px; }
+</style>
+<script>
+  const variants = ["vA2-timestamps", "vA3-tail", "vA4-terminal", "vA-errorlines", "vB-prompt", "vC-jump", "vD-pulse"];
+  const block = (cls, label) => `<div class="${cls}"><h2>${label}</h2><div class="strip">` +
+    variants.map(v => `<div class="variant"><div class="row"><img class="lg" src="${v}.svg"><img class="md" src="${v}.svg"><img class="sm" src="${v}.svg"></div><span>${v}</span></div>`).join("") +
+    `</div></div>`;
+  document.write(block("dark", "dark") + block("light", "light"));
+</script>

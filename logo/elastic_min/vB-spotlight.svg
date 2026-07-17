@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vB: spotlight — beam from above finds the one -->
+  <defs><clipPath id="tileB"><rect width="512" height="512" rx="116"/></clipPath></defs>
+  <g clip-path="url(#tileB)">
+    <rect width="512" height="512" fill="#1c2433"/>
+    <path d="M84 76 L344 296 L216 424 Z" fill="#69C3FF" opacity="0.16"/>
+    <circle cx="150" cy="382" r="26" fill="#3a4f75"/>
+    <circle cx="392" cy="168" r="26" fill="#3a4f75"/>
+    <circle cx="282" cy="356" r="46" fill="#3CEC85"/>
+  </g>
+</svg>
