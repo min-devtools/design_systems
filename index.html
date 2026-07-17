@@ -335,9 +335,12 @@
       const o = document.createElement('option');
       o.value = t; o.textContent = t; select.appendChild(o);
     }
+    const LIGHT_THEMES = ["bearded-solarized-light","rose-milk","sakura-pastel","soft-light"];
     select.addEventListener('change', () => {
       if (select.value) document.body.dataset.theme = select.value;
       else delete document.body.dataset.theme;
+      // mirror app behavior: light-base themes also get body.light (color-scheme, control styles)
+      document.body.classList.toggle('light', LIGHT_THEMES.includes(select.value));
     });
     document.getElementById('theme-toggle').addEventListener('click', () => {
       document.body.classList.toggle('light');

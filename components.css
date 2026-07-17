@@ -109,9 +109,11 @@ body.light .search {
   border-color: var(--control-border);
 }
 
+/* :not(.primary): this rule ties (0,3,1) with the primary-button rules above and loads later,
+   so without the exclusion it repaints primary buttons near-white on hover — white text vanishes. */
 body.light input:hover,
 body.light select:hover,
-body.light .tool-btn:hover {
+body.light .tool-btn:not(.primary):hover {
   background: var(--control-hover-bg);
 }
 
@@ -1261,8 +1263,8 @@ td > span {
   gap: 8px;
   padding: 7px 14px;
   border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  border: 1px solid var(--line);
+  background: var(--pane);
   color: var(--text);
   font-size: 1rem;
   font-weight: 600;

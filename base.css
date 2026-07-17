@@ -35,3 +35,9 @@ input, textarea { user-select: text; cursor: text; }
 button, input, textarea, select { font: inherit; }
 
 button { color: inherit; cursor: pointer; }
+
+/* keyboard-only focus ring; :where keeps specificity 0 so any component style wins */
+:where(button, select, a, [tabindex]):focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent-focus, var(--blue)), transparent 40%);
+  outline-offset: 1px;
+}
