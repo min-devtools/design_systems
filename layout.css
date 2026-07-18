@@ -312,8 +312,8 @@ body.resizing-y { cursor: row-resize; }
 .inspector-head { height: 55px; }
 
 .statusbar {
-  display: grid;
-  grid-template-columns: minmax(220px, var(--left-w)) minmax(300px, 1fr) max-content;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--line);
   background: color-mix(in oklab, var(--window), var(--app-bg) 8%);
@@ -325,17 +325,7 @@ body.resizing-y { cursor: row-resize; }
 
 .statusbar > div:first-child { padding-left: 44px; }
 
-.statusbar .right-status { min-width: 360px; padding-right: 44px; }
-
-body.left-collapsed .statusbar { grid-template-columns: 48px minmax(300px, 1fr) max-content; }
-
-body.right-collapsed .statusbar { grid-template-columns: minmax(220px, var(--left-w)) minmax(300px, 1fr) max-content; }
-
-body.inspector-unavailable .statusbar { grid-template-columns: minmax(220px, var(--left-w)) minmax(300px, 1fr) max-content; }
-
-body.left-collapsed.inspector-unavailable .statusbar { grid-template-columns: 48px minmax(300px, 1fr) max-content; }
-
-body.left-collapsed.right-collapsed .statusbar { grid-template-columns: 48px minmax(300px, 1fr) max-content; }
+.statusbar .right-status { padding-right: 44px; }
 
 body.inspector-unavailable .panel-toggle.panel-corner.right {
   opacity: 0.38;
@@ -424,7 +414,6 @@ body.light .inspector-editor-host { background: var(--editor-bg); }
 
 @media (max-width: 1180px) {
   body:not(.left-collapsed) .main { grid-template-columns: 220px minmax(520px, 1fr) 0; }
-  body:not(.left-collapsed) .statusbar { grid-template-columns: 220px minmax(260px, 1fr) max-content; }
   body:not(.left-collapsed) .inspector, body:not(.left-collapsed) .resize-handle.right { display: none; }
   .titlebar { grid-template-columns: 230px minmax(220px, 1fr) max-content; }
 }

@@ -57,6 +57,7 @@ If someone opens the app, these traits identify it at a glance:
 | `TOKENS.md` | Token dictionary — real names, real values, usage. |
 | `COMPONENTS.md` | Class-by-class component guide. |
 | `ICONS.md` | The icon language (lucide names, size, stroke). |
+| `SHORTCUTS.md` | Keyboard shortcuts, dialog behaviour, button variants. |
 | `index.html` | Live showcase — open in a browser, toggle light/dark, switch themes. |
 
 ## Load order
