@@ -45,7 +45,7 @@
   border: 1px solid var(--line);
   border-radius: 8px;
   background: transparent;
-  cursor: pointer;
+  cursor: default;
   white-space: nowrap;
   transition: background 120ms ease, border-color 120ms ease;
 }
@@ -135,7 +135,7 @@ body.light select:focus {
   padding: 0 8px;
   border-radius: 8px;
   color: var(--text-2);
-  cursor: pointer;
+  cursor: default;
   position: relative;
 }
 
@@ -375,7 +375,7 @@ body.light .env-input > input:hover {
   width: 15px;
   height: 15px;
   accent-color: var(--blue);
-  cursor: pointer;
+  cursor: default;
 }
 
 .page-size {
@@ -400,7 +400,7 @@ body.light .env-input > input:hover {
   color: var(--blue);
   background: color-mix(in oklab, var(--blue), transparent 90%);
   font: 0.8462rem/1 var(--font-mono);
-  cursor: pointer;
+  cursor: default;
   white-space: nowrap;
 }
 
@@ -473,7 +473,7 @@ tr:nth-child(even) td { background: var(--row-alt); }
 
 tr:nth-child(odd) td { background: var(--row); }
 
-tbody tr { cursor: pointer; }
+tbody tr { cursor: default; }
 
 tbody tr:hover td { background: color-mix(in oklab, var(--blue), transparent 86%); }
 tbody tr.selected td { background: color-mix(in oklab, var(--blue), transparent 76%); }
@@ -590,7 +590,7 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   border-radius: 6px;
   color: var(--text-2);
   font-size: 0.9231rem;
-  cursor: pointer;
+  cursor: default;
   width: 100%;
   border: 0;
   background: transparent;
@@ -681,7 +681,7 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   border-radius: 7px;
   color: var(--text-2);
   background: transparent;
-  cursor: pointer;
+  cursor: default;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -718,7 +718,7 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   border-radius: 8px;
   background: var(--pane-2);
   color: var(--text);
-  cursor: pointer;
+  cursor: default;
   text-align: left;
   padding: 0 10px;
 }
@@ -738,7 +738,7 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   background: transparent;
   color: var(--text-2);
   font: inherit;
-  cursor: pointer;
+  cursor: default;
 }
 .sync-status:disabled { cursor: default; }
 .sync-status:not(:disabled):hover { background: var(--pane-3); border-color: var(--line-2); }
@@ -788,10 +788,18 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   padding: 0 10px;
   border-radius: 8px;
   color: var(--text-2);
-  cursor: pointer;
+  cursor: default;
 }
 
 .cmd.active, .cmd:hover { background: color-mix(in oklab, var(--blue), transparent 84%); color: var(--text); }
+
+.cmd mark {
+  background: none;
+  color: var(--blue-2);
+  font-weight: 600;
+  isolation: isolate;
+}
+.cmd.active mark, .cmd:hover mark { color: var(--blue-2); }
 
 .toast {
   position: fixed;
@@ -1162,7 +1170,7 @@ body.light .ai-query { background: var(--editor-bg); }
 select {
   appearance: none;
   -webkit-appearance: none;
-  cursor: pointer;
+  cursor: default;
   padding-right: 26px !important;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%238a8a8a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
@@ -1218,7 +1226,7 @@ select:focus {
   min-height: 28px;
   padding: 0 8px;
   border-radius: 6px;
-  cursor: pointer;
+  cursor: default;
 }
 
 .combobox-item.active { background: color-mix(in oklab, var(--blue), transparent 84%); }
@@ -1324,7 +1332,7 @@ td > span {
   color: var(--text);
   font-size: 1rem;
   font-weight: 600;
-  cursor: pointer;
+  cursor: default;
 }
 .settings-github:hover {
   border-color: var(--accent-primary);
@@ -1333,7 +1341,7 @@ td > span {
 .settings-credit-link {
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: default;
   font-size: 0.9231rem;
   font-weight: 600;
   color: var(--accent-primary);
@@ -1415,7 +1423,7 @@ td > span {
 
 /* toggle switch used by settings rows */
 .switch { position: relative; display: inline-block; width: 38px; height: 22px; flex: none; }
-.switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: default; }
 .switch span {
   position: absolute; inset: 0;
   border: 1px solid var(--line);

@@ -169,7 +169,7 @@ body.resizing-y { cursor: row-resize; }
 .side-scroll, .inspector-scroll { height: calc(100% - 55px); overflow: auto; padding: 10px; }
 
 .group { margin-bottom: 14px; }
-.group-title.group-toggle { width: calc(100% - 12px); padding: 0; border: 0; background: transparent; text-align: left; cursor: pointer; }
+.group-title.group-toggle { width: calc(100% - 12px); padding: 0; border: 0; background: transparent; text-align: left; cursor: default; }
 .group-title.group-toggle svg { transition: transform 140ms ease; }
 .collapsible-group.collapsed .group-title.group-toggle svg { transform: rotate(-90deg); }
 .collapsible-group .group-content { display: grid; grid-template-rows: 1fr; overflow: hidden; }
@@ -230,7 +230,7 @@ body.resizing-y { cursor: row-resize; }
   border-bottom-color: var(--line);
   border-radius: 10px 10px 0 0;
   background: color-mix(in oklab, var(--pane), transparent 20%);
-  cursor: pointer;
+  cursor: default;
   position: relative;
   transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
   -webkit-user-drag: element;
@@ -301,7 +301,7 @@ body.resizing-y { cursor: row-resize; }
   border: 1px dashed var(--line-2);
   border-radius: 9px 9px 0 0;
   background: transparent;
-  cursor: pointer;
+  cursor: default;
   white-space: nowrap;
 }
 
