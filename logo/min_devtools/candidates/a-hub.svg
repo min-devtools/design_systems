@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vA: hub — one core, six tools orbiting it. The org holds the family. -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#31456b" stroke-width="13" stroke-linecap="round">
+    <path d="M256 256 L256 118"/><path d="M256 256 L376 187"/><path d="M256 256 L376 325"/>
+    <path d="M256 256 L256 394"/><path d="M256 256 L136 325"/><path d="M256 256 L136 187"/>
+  </g>
+  <g fill="#3a4f75">
+    <circle cx="256" cy="118" r="26"/><circle cx="376" cy="187" r="26"/><circle cx="376" cy="325" r="26"/>
+    <circle cx="256" cy="394" r="26"/><circle cx="136" cy="325" r="26"/>
+  </g>
+  <circle cx="136" cy="187" r="26" fill="#69C3FF"/>
+  <circle cx="256" cy="256" r="52" fill="#3CEC85"/>
+</svg>
