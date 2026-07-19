@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vE: one base, two futures — sideways fork; green = the branch checked out -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#3a4f75" stroke-width="18" fill="none" stroke-linecap="round">
+    <path d="M120 256 H 232"/>
+    <path d="M232 256 C 300 256 320 160 392 160"/>
+    <path d="M232 256 C 300 256 320 352 392 352"/>
+  </g>
+  <circle cx="120" cy="256" r="32" fill="#3a4f75"/>
+  <circle cx="392" cy="352" r="32" fill="#3a4f75"/>
+  <circle cx="392" cy="160" r="44" fill="#3CEC85"/>
+</svg>

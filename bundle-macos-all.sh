@@ -6,7 +6,7 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-ALL_APPS=(elastic_min requests_min kafka_ui_min redis_min)
+ALL_APPS=(elastic_min requests_min kafka_ui_min redis_min git_min log_min)
 APPS=("${@:-${ALL_APPS[@]}}")
 
 log() { printf '\n\033[1;34m[%s]\033[0m %s\n' "$(date '+%H:%M:%S')" "$*"; }

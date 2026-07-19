@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vD2: two lanes running parallel, branch rejoins main at top; green = HEAD -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#3a4f75" stroke-width="16" fill="none" stroke-linecap="round">
+    <path d="M158 420 V 108"/>
+    <path d="M158 348 C 158 300 336 316 336 268 V 212 C 336 164 158 180 158 132"/>
+  </g>
+  <g fill="#3a4f75">
+    <circle cx="158" cy="420" r="26"/>
+    <circle cx="158" cy="348" r="26"/>
+    <circle cx="158" cy="256" r="26"/>
+  </g>
+  <circle cx="336" cy="268" r="26" fill="#69C3FF"/>
+  <circle cx="336" cy="212" r="26" fill="#69C3FF"/>
+  <circle cx="158" cy="108" r="38" fill="#3CEC85"/>
+</svg>

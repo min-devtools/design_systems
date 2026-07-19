@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vD6: same graph, but the branch is the one you're on — green sits on the side lane -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#3a4f75" stroke-width="16" fill="none" stroke-linecap="round">
+    <path d="M154 418 V 106"/>
+    <path d="M154 336 C 154 288 336 300 336 252 V 178"/>
+  </g>
+  <g fill="#3a4f75">
+    <circle cx="154" cy="418" r="26"/>
+    <circle cx="154" cy="336" r="26"/>
+    <circle cx="154" cy="252" r="26"/>
+    <circle cx="154" cy="168" r="26"/>
+    <circle cx="154" cy="106" r="26"/>
+    <circle cx="336" cy="252" r="26"/>
+  </g>
+  <circle cx="336" cy="178" r="40" fill="#3CEC85"/>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vD4: main lane centered, branch swings left then returns — balanced tile -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#3a4f75" stroke-width="16" fill="none" stroke-linecap="round">
+    <path d="M256 416 V 112"/>
+    <path d="M256 344 C 256 296 150 312 150 264 V 220"/>
+  </g>
+  <g fill="#3a4f75">
+    <circle cx="256" cy="416" r="26"/>
+    <circle cx="256" cy="344" r="26"/>
+    <circle cx="256" cy="252" r="26"/>
+    <circle cx="150" cy="264" r="26"/>
+  </g>
+  <circle cx="150" cy="220" r="26" fill="#69C3FF"/>
+  <circle cx="256" cy="112" r="40" fill="#3CEC85"/>
+</svg>

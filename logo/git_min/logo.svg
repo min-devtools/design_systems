@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vD5: three lanes — branches off both sides of a central trunk -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#3a4f75" stroke-width="15" fill="none" stroke-linecap="round">
+    <path d="M256 424 V 104"/>
+    <path d="M256 358 C 256 314 136 326 136 282 V 236"/>
+    <path d="M256 300 C 256 256 376 268 376 224 V 178"/>
+  </g>
+  <g fill="#3a4f75">
+    <circle cx="256" cy="424" r="24"/>
+    <circle cx="256" cy="358" r="24"/>
+    <circle cx="256" cy="300" r="24"/>
+    <circle cx="136" cy="282" r="24"/>
+    <circle cx="136" cy="236" r="24"/>
+    <circle cx="376" cy="224" r="24"/>
+  </g>
+  <circle cx="376" cy="178" r="24" fill="#69C3FF"/>
+  <circle cx="256" cy="104" r="38" fill="#3CEC85"/>
+</svg>

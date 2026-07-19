@@ -277,6 +277,8 @@ right-aligned.
 
 - `.req-progress.on` — 2px indeterminate loading bar (`@keyframes run`), pinned under a request/editor header. Header container needs `position: relative`.
 - `.response.loading .response-body` — dim + lock while in flight.
+- `.loading-bar(.on)` — unified 2px bar (indeterminate; `.determinate` + `--progress` for 0..1). Parent must be positioned. Use for app-level / header progress.
+- `.section-veil(.on)` + `.veil-spinner` — **canonical section loading state, every app**: absolutely-positioned dim + blur overlay with spinner + label, covering the busy section (table, response body, detail pane, graph). Parent must be `position: relative`. Fades in/out (160ms), blocks clicks only while `.on`. Markup: `<div class="section-veil on"><span class="veil-spinner"></span><span>Loading…</span></div>`. Show it when a section has no data yet or a blocking reload is running; do NOT flash it for sub-200ms background refetches.
 - `.empty-note` — centered muted empty state.
 - `.err-note` — red mono error block, wraps, selectable.
 

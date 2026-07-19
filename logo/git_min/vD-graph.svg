@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vD: the lazygit graph pane — commit lane + side branch, dense; green = HEAD -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#3a4f75" stroke-width="16" fill="none" stroke-linecap="round">
+    <path d="M154 412 V 100"/>
+    <path d="M154 340 C 154 288 320 300 320 248 V 176"/>
+  </g>
+  <g fill="#3a4f75">
+    <circle cx="154" cy="412" r="26"/>
+    <circle cx="154" cy="340" r="26"/>
+    <circle cx="154" cy="248" r="26"/>
+    <circle cx="320" cy="248" r="26"/>
+  </g>
+  <circle cx="320" cy="176" r="26" fill="#69C3FF"/>
+  <circle cx="154" cy="100" r="38" fill="#3CEC85"/>
+</svg>

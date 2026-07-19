@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vD3: denser history — more commits on main, one short-lived side branch -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g stroke="#3a4f75" stroke-width="14" fill="none" stroke-linecap="round">
+    <path d="M162 424 V 96"/>
+    <path d="M162 342 C 162 300 326 312 326 270 V 214"/>
+  </g>
+  <g fill="#3a4f75">
+    <circle cx="162" cy="424" r="24"/>
+    <circle cx="162" cy="342" r="24"/>
+    <circle cx="162" cy="260" r="24"/>
+    <circle cx="162" cy="178" r="24"/>
+    <circle cx="326" cy="270" r="24"/>
+  </g>
+  <circle cx="326" cy="214" r="24" fill="#69C3FF"/>
+  <circle cx="162" cy="96" r="36" fill="#3CEC85"/>
+</svg>

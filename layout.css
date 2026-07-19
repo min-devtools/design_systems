@@ -239,13 +239,15 @@ body.resizing-y { cursor: row-resize; }
 /* svg icons default to their own native drag gesture in WebKit — let it bubble to .tab instead */
 .tab svg, .tab img { -webkit-user-drag: none; }
 
-/* title label: single line, ellipsis when tab is narrow */
+/* title label: single line, ellipsis when tab is narrow; truncate on the left so the repo name stays visible */
 .tab-title, .tab > span:not([class]) {
   flex: 1 1 auto;
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
 }
 
 .tab-method { flex: none; font-size: 0.7692rem; }
