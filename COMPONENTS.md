@@ -60,6 +60,11 @@ hover, then a `var(--blue)` bar with a glow (`box-shadow`) fades in.
 </nav>
 ```
 
+- `.tabs` — scrolls horizontally; scrollbar hidden (no room in a 31px strip). Tabs
+  are `flex: 0 0 auto`, so they keep their width instead of squeezing to
+  unreadable. Each `TabsBar` scrolls the active tab into view on change, since
+  ⌘1-9 / the palette / closing a tab can land on one that is off-screen. The
+  `.tab-add` button lives in the same scroller and scrolls away with the tabs.
 - `.tab` — 31px tall, `10px 10px 0 0` radius, min 96 / max 584px, draggable.
 - `.tab.active` — blue top-gradient wash + colored border + hairline top
   highlight, bottom border transparent (fuses into content).

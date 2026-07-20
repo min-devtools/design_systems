@@ -233,22 +233,31 @@ body.resizing-y { cursor: row-resize; }
   background: var(--window);
 }
 
+/* Scrolls rather than squeezing. Tabs used to shrink to their 96px min and then get
+   clipped by `overflow: hidden` — past a certain count the last tabs were unreachable,
+   and the ones still visible were too narrow to read. */
 .tabs {
   display: flex;
   align-items: flex-end;
   gap: 7px;
   padding: 6px 8px 0;
   background: color-mix(in oklab, var(--window), var(--app-bg) 5%);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* no room for a scrollbar in a 31px strip — scroll with trackpad / shift-wheel,
+     and activating a tab scrolls it into view (see TabsBar) */
+  scrollbar-width: none;
 }
+
+.tabs::-webkit-scrollbar { display: none; }
 
 .tab {
   height: 31px;
   min-width: 96px;
-  /* generous cap so "title · connection-name" survives without ellipsis; tabs are
-     `flex: 0 1 auto`, so a crowded bar still shrinks them well below this */
+  /* generous cap so "title · connection-name" survives without ellipsis; tabs keep
+     their natural width and the bar scrolls instead of squeezing them */
   max-width: 584px;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   gap: 8px;
