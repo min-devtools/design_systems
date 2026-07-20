@@ -51,6 +51,38 @@ collapses to the `#7A3EED` brand purple.
 | `--red` | `#E35535` | `#f43f5e` | Error, danger, null |
 | `--purple` | `#F38CEC` | `#7A3EED` | IDs, SKUs, env tokens, booleans |
 
+## Connection colors
+
+The palette a user picks from to give a connection / repository / collection an
+identity color. Every tab bound to that owner carries the color as a dot, so two
+tabs of the same kind on different servers are never confused.
+
+Unlike everything else here these are **theme-independent** and declared `:root`
+only. The color is an identity the user chose, not a themed surface — it must
+look the same in every theme, and re-tinting it across 20+ themes would destroy
+the recognition it exists for. Values are Radix scale-9 solids, the tier built to
+hold contrast on both light and dark, so one set covers all themes.
+
+Eight of them, so the picker plus its "none" cell is a square 3×3. Teal and
+indigo were dropped as the two least separable — teal sits on green, indigo on
+blue — and a palette whose colors get confused defeats the point.
+
+| Token | Hex | | Token | Hex |
+|-------|-----|-|-------|-----|
+| `--conn-red` | `#E5484D` | | `--conn-blue` | `#0090FF` |
+| `--conn-orange` | `#F76B15` | | `--conn-purple` | `#8E4EC6` |
+| `--conn-amber` | `#FFB224` | | `--conn-pink` | `#D6409F` |
+| `--conn-green` | `#30A46C` | | `--conn-slate` | `#7C8698` |
+
+Apps store the token **name** (`"blue"`), never the hex, so the palette can be
+retuned without migrating saved data. See `src/lib/connColor.ts` in any app: it
+sets `--conn` inline, and the components below read it. `connStyle()` validates
+the name against the palette first — a color later dropped from the set can
+still be sitting in a persisted store, and emitting `var(--conn-teal)` for a
+token that no longer exists would poison the whole declaration. Unvalidated or
+unset = no `--conn`, and every `var(--conn, …)` falls back to what it used
+before colors existed.
+
 ## Row backgrounds (tables)
 
 | Token | Dark | Light |

@@ -42,6 +42,10 @@ Rules:
 | `⌘+` / `⌘-` | UI font size ±0.5px |
 | `Esc` | Close palette / dialog / inline search |
 
+Inside the command palette, `Tab` and `↓` select the next result, while `↑`
+selects the previous result. With Vim mode/keys enabled, `Ctrl-N` and `Ctrl-P`
+also select the next and previous result respectively.
+
 `⌘E` and `⌘D` are **reserved for item actions** and must not be taken by an
 app-specific view. Per-app view shortcuts use `⌘⇧<letter>` or a free letter:
 

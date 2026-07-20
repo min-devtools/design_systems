@@ -48,9 +48,11 @@ hover, then a `var(--blue)` bar with a glow (`box-shadow`) fades in.
 ```html
 <nav class="tabs">
   <button class="tab active">
+    <span class="conn-dot" style="--conn: var(--conn-red)"></span>  <!-- owner color -->
     <span class="tab-dirty-dot"></span>        <!-- orange, unsaved -->
     <span class="tab-method method-tag POST">POST</span>
     <span class="tab-title">Create order</span>
+    <span class="tab-conn">prod-eu</span>      <!-- owner name -->
     <span class="tab-close">×</span>
   </button>
   <button class="tab">…</button>
@@ -58,7 +60,7 @@ hover, then a `var(--blue)` bar with a glow (`box-shadow`) fades in.
 </nav>
 ```
 
-- `.tab` — 31px tall, `10px 10px 0 0` radius, min 96 / max 190px, draggable.
+- `.tab` — 31px tall, `10px 10px 0 0` radius, min 96 / max 584px, draggable.
 - `.tab.active` — blue top-gradient wash + colored border + hairline top
   highlight, bottom border transparent (fuses into content).
 - `.tab.dragging` (0.4 opacity) / `.tab.drag-over` (blue insertion bar `::before`).
@@ -69,6 +71,58 @@ hover, then a `var(--blue)` bar with a glow (`box-shadow`) fades in.
 
 **Secondary tabs** — `.mini-tabs` (inside panels/inspector): 26px pill buttons,
 active gets `--pane-2` fill + border.
+
+### Connection identity on a tab
+
+A tab belongs to one connection / repository / collection for its whole life —
+switching owners opens a new tab, it never retargets an open one.
+
+`--conn` is set inline **on the `.tab` itself**, and everything colored reads
+from that one declaration:
+
+- `.conn-dot` — 7px dot, first child of the tab. Also used in sidebar rows,
+  where it carries its own inline `--conn`.
+- `.tab::after` — the active tab's 2px underline.
+- `.tab.active` — the top gradient wash and the border.
+- `.tab-conn` — the owner's name after the title, muted, `·`-prefixed. Truncates
+  before the title does, since the title is the more specific label.
+
+Inactive tabs are **not** tinted: a busy tab bar would turn into stripes, and
+the dot already carries identity there.
+
+Every colored rule falls back through `var(--conn, …)`, so a tab with no owner
+(Welcome, Settings, the connection form) or an owner with no color picked looks
+exactly as it did before this existed — theme accent underline, `--blue` wash,
+muted dot.
+
+Name plus color, never color alone: the tab still reads correctly with no color
+vision, or when two owners share a color.
+
+**Sidebar rows.** `.nav-item > .conn-dot` centers in the row's 18px icon slot,
+replacing a decorative icon. Rows that need that slot for a real control — a
+collapse chevron — add `.with-conn-dot` instead, which opens a second narrow
+column for the dot and moves the truncation rule to the label's new position.
+
+### Color picker
+
+```html
+<button class="conn-swatch" style="--conn: var(--conn-red)"></button>  <!-- opens the modal -->
+
+<div class="modal">
+  <div class="prompt-dialog">
+    <div class="color-grid">
+      <button class="color-swatch selected" style="--conn: var(--conn-red)"></button>
+      …
+      <button class="color-swatch none">none</button>
+    </div>
+  </div>
+</div>
+```
+
+- `.conn-swatch` — 20px rounded chip on the owner's edit form; opens the modal.
+- `.color-grid` — 3-column grid; the eight colors plus "none" make a square 3×3.
+- `.color-swatch.selected` — double ring (window-colored gap, then the color).
+- `.color-swatch.none` — dashed outline, no fill, so it can't read as a color.
 
 ---
 

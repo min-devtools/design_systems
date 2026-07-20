@@ -245,7 +245,9 @@ body.resizing-y { cursor: row-resize; }
 .tab {
   height: 31px;
   min-width: 96px;
-  max-width: 253px;
+  /* generous cap so "title · connection-name" survives without ellipsis; tabs are
+     `flex: 0 1 auto`, so a crowded bar still shrinks them well below this */
+  max-width: 584px;
   flex: 0 1 auto;
   display: inline-flex;
   align-items: center;
@@ -262,7 +264,10 @@ body.resizing-y { cursor: row-resize; }
   -webkit-user-drag: element;
 }
 
-/* active-tab accent underline — scaleX so it grows in place, never nudges layout */
+/* active-tab accent underline — scaleX so it grows in place, never nudges layout.
+   Takes the connection's color when the tab has one: `--conn` is set inline on the .tab
+   itself, so the underline, the active wash and the dot all read from one declaration and
+   a tab with no owner (or an owner with no color picked) falls back to the theme accent. */
 .tab::after {
   content: "";
   position: absolute;
@@ -271,7 +276,7 @@ body.resizing-y { cursor: row-resize; }
   bottom: 0;
   height: 2px;
   border-radius: 1px;
-  background: var(--accent-line);
+  background: var(--conn, var(--accent-line));
   transform: scaleX(0);
   transform-origin: center;
   transition: transform var(--motion-standard) var(--ease-ui);
@@ -298,12 +303,14 @@ body.resizing-y { cursor: row-resize; }
 
 .tab:hover { color: var(--text); background: var(--pane-2); }
 
+/* Only the active tab is washed. Tinting every tab would turn a busy tab bar into stripes
+   and the dot already carries identity on the inactive ones. */
 .tab.active {
   color: var(--text);
   background:
-    linear-gradient(180deg, color-mix(in oklab, var(--blue), transparent 88%), transparent 70%),
+    linear-gradient(180deg, color-mix(in oklab, var(--conn, var(--blue)), transparent 88%), transparent 70%),
     var(--window);
-  border-color: color-mix(in oklab, var(--blue), transparent 62%);
+  border-color: color-mix(in oklab, var(--conn, var(--blue)), transparent 62%);
   border-bottom-color: transparent;
   box-shadow: inset 0 1px 0 color-mix(in oklab, var(--text), transparent 96%);
 }

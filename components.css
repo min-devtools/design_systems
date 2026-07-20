@@ -141,6 +141,14 @@ body.light select:focus {
     box-shadow var(--motion-fast) var(--ease-ui);
 }
 
+/* label column truncates instead of wrapping — needs min-width:0 to shrink below content size in a grid track */
+.nav-item > span:nth-child(2), .index-item > span:nth-child(2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
 /* selected-row accent rail — scaleY in, no translation, no hand cursor */
 .nav-item::before, .index-item::before {
   content: "";
@@ -376,6 +384,101 @@ body.light .env-input > input:hover {
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--orange), transparent 84%);
 }
 
+/* ── Connection color ───────────────────────────────────────────────────────
+   Every tab bound to a connection/repo/collection carries its owner's color as a
+   leading dot plus the owner's name, so two tabs of the same kind on different
+   connections are never confused. `--conn` is set inline per element from the
+   stored color token; unset (no color chosen) falls back to the muted text hue,
+   which reads as "no color" rather than as an eleventh color. */
+.conn-dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--conn, var(--text-3));
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--conn, var(--text-3)), transparent 84%);
+}
+
+/* in a sidebar row the dot takes the 18px icon slot, so center it there */
+.nav-item > .conn-dot { justify-self: center; }
+
+/* A row whose leading slot is already spoken for — a collapse chevron the user needs to
+   keep clicking — gets its own narrow column for the dot instead of surrendering that slot.
+   The label is then the third child, so the truncation rule has to move with it. */
+.nav-item.with-conn-dot,
+.collection-node.with-conn-dot { grid-template-columns: 18px 9px minmax(0, 1fr) auto; }
+
+.nav-item.with-conn-dot > .conn-dot { justify-self: start; }
+
+.nav-item.with-conn-dot > span:nth-child(3),
+.collection-node.with-conn-dot > span:nth-child(3) {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* owner name trailing the tab title — quiet, and the first thing to give up width */
+.tab-conn {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-3);
+  font-size: 0.7692rem;
+}
+
+.tab-conn::before { content: "·"; margin-right: 4px; }
+
+.tab.active .tab-conn { color: var(--text-2); }
+
+/* the swatch on a connection form that opens the color modal */
+.conn-swatch {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  border-radius: 6px;
+  border: 1px solid var(--line-2);
+  background: var(--conn, transparent);
+  cursor: default;
+  transition: border-color var(--motion-fast) var(--ease-ui), transform var(--motion-fast) var(--ease-ui);
+}
+
+.conn-swatch:hover { border-color: var(--accent); transform: scale(1.08); }
+
+/* picker modal: the eight colors plus a "none" cell fill a square 3×3 */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.color-swatch {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: var(--conn, transparent);
+  cursor: default;
+  position: relative;
+  transition: transform var(--motion-fast) var(--ease-ui), box-shadow var(--motion-fast) var(--ease-ui);
+}
+
+.color-swatch:hover { transform: scale(1.08); }
+
+.color-swatch.selected {
+  box-shadow: 0 0 0 2px var(--window), 0 0 0 4px var(--conn, var(--text-3));
+}
+
+/* "no color" cell — dashed outline instead of a fill, so it can't read as a color */
+.color-swatch.none {
+  border: 1px dashed var(--line-2);
+  color: var(--text-3);
+  display: grid;
+  place-items: center;
+  font-size: 0.7692rem;
+}
+
 /* accent bar next to each right-dock panel title so cards read as distinct */
 .inspector .panel h3 {
   display: flex;
@@ -484,7 +587,7 @@ table {
      (rows jitter on hover, header border scrolls away) */
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 0.9231rem;
+  font-size: 1rem;
 }
 
 th, td {

@@ -21,6 +21,27 @@
   --ease-ui: cubic-bezier(.2, 0, 0, 1);
   --ease-enter: cubic-bezier(.05, .7, .1, 1);
   --ease-exit: cubic-bezier(.3, 0, 1, 1);
+
+  /* Connection colors — the user-assignable palette for connections/repos/collections,
+     rendered as the dot on each tab so "which environment am I in" reads at a glance.
+     Deliberately :root-only and theme-independent: a connection's color is an identity
+     the user picked, not a themed surface — it must look the same in every theme, and
+     re-tinting it per theme across 20+ themes would break that recognition. Values are
+     Radix scale-9 solids, the tier engineered to hold contrast on both light and dark
+     backgrounds, so one set covers all themes.
+
+     Eight, so the picker plus its "none" cell is a square 3×3. Picked to spread around
+     the wheel — teal and indigo were dropped as the two least separable (teal sits on
+     green, indigo on blue), since a palette whose colors get confused defeats the point.
+     Order = swatch order in the picker, reading left to right. */
+  --conn-red: #E5484D;
+  --conn-orange: #F76B15;
+  --conn-amber: #FFB224;
+  --conn-green: #30A46C;
+  --conn-blue: #0090FF;
+  --conn-purple: #8E4EC6;
+  --conn-pink: #D6409F;
+  --conn-slate: #7C8698;
 }
 
 :root, body {
