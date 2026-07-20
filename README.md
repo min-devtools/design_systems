@@ -31,7 +31,7 @@ If someone opens the app, these traits identify it at a glance:
 5. **Restrained color.** Grayscale surfaces + **one** accent (a desaturated blue
    on dark, purple on light) + four semantic colors (green / orange / red /
    purple). No Material, no gradients-as-decoration, no dashboard cards.
-6. **Two typefaces only.** **Inter** for UI, **Google Sans Code** for everything
+6. **Two typefaces only.** **Exo 2** for UI, **Google Sans Code** for everything
    structural — code, IDs, tables, status bar, badges, keyboard hints. (Both on
    Google Fonts. Berkeley Mono is kept as a mono fallback.)
 7. **Frosted overlays.** Command palette, context menus, toasts, comboboxes all
@@ -74,15 +74,19 @@ If someone opens the app, these traits identify it at a glance:
 
 The CSS assumes two fonts and one icon lib exist. Add them:
 
-**Fonts** — Inter (UI) + Google Sans Code (mono), both free on Google Fonts:
+**Fonts** — Exo 2 (UI) + Google Sans Code (mono).
+
+Exo 2 ships **in this repo**: `fonts/exo2-{latin,latin-ext,vietnamese}.woff2`,
+already registered by `@font-face` at the top of `base.css`. Nothing to install —
+copy the `fonts/` directory next to the CSS and relative `url()` resolves.
+
+Google Sans Code is still an external load (Tauri apps bundle it themselves):
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
 ```
-
-Or via CSS: `@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Inter:wght@100..900&display=swap");`
 
 **Icons** — lucide: `npm i lucide-react`. See `ICONS.md`.
 
@@ -102,6 +106,6 @@ dependencies — drop in and go.
   `--orange`/`--red`/`--purple` for status/semantics only.
 - **Tints via `color-mix(in oklab, <token>, transparent N%)`** — do not invent
   new hex for a hover or selection state.
-- **Type:** Inter for UI, Google Sans Code for code/IDs/tables/status/kbd. 13px root.
+- **Type:** Exo 2 for UI, Google Sans Code for code/IDs/tables/status/kbd. 13px root.
 - **No** Material Design, heavy drop-shadows, gradient hero backgrounds, or
   rounded dashboard cards.

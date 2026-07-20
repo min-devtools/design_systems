@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- xA: nether portal — two blocked pillars, solid lintels, field lit green -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="194" y="145" width="124" height="222" fill="#3CEC85"/>
+  <g fill="#3a4f75">
+    <rect x="194" y="97" width="124" height="48" rx="10"/>
+    <rect x="194" y="367" width="124" height="48" rx="10"/>
+    <rect x="146" y="97" width="48" height="48" rx="10"/>
+    <rect x="146" y="151" width="48" height="48" rx="10"/>
+    <rect x="146" y="205" width="48" height="48" rx="10"/>
+    <rect x="146" y="259" width="48" height="48" rx="10"/>
+    <rect x="146" y="313" width="48" height="48" rx="10"/>
+    <rect x="146" y="367" width="48" height="48" rx="10"/>
+    <rect x="318" y="97" width="48" height="48" rx="10"/>
+    <rect x="318" y="151" width="48" height="48" rx="10"/>
+    <rect x="318" y="205" width="48" height="48" rx="10"/>
+    <rect x="318" y="259" width="48" height="48" rx="10"/>
+    <rect x="318" y="313" width="48" height="48" rx="10"/>
+    <rect x="318" y="367" width="48" height="48" rx="10"/>
+  </g>
+</svg>

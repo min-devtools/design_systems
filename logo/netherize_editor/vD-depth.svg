@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vD: stacked cards receding — buffer ring / drill deeper -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="112" y="212" width="264" height="180" rx="26" fill="#31456b"/>
+  <rect x="144" y="176" width="264" height="180" rx="26" fill="#3a4f75"/>
+  <rect x="176" y="120" width="184" height="96" rx="22" fill="#3CEC85"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vA: four cards on the canvas plane, one focal -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <g fill="#3a4f75">
+    <rect x="96" y="96" width="168" height="132" rx="24"/>
+    <rect x="296" y="96" width="120" height="132" rx="24"/>
+    <rect x="96" y="284" width="120" height="132" rx="24"/>
+  </g>
+  <rect x="248" y="284" width="168" height="132" rx="24" fill="#3CEC85"/>
+</svg>

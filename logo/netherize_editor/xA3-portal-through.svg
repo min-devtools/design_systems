@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- xA3: something steps through — the card crosses the threshold -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="164" y="145" width="124" height="222" fill="#31456b"/>
+  <g fill="#3a4f75">
+    <rect x="164" y="97" width="124" height="48" rx="10"/>
+    <rect x="164" y="367" width="124" height="48" rx="10"/>
+    <rect x="116" y="97" width="48" height="48" rx="10"/>
+    <rect x="116" y="151" width="48" height="48" rx="10"/>
+    <rect x="116" y="205" width="48" height="48" rx="10"/>
+    <rect x="116" y="259" width="48" height="48" rx="10"/>
+    <rect x="116" y="313" width="48" height="48" rx="10"/>
+    <rect x="116" y="367" width="48" height="48" rx="10"/>
+    <rect x="288" y="97" width="48" height="48" rx="10"/>
+    <rect x="288" y="151" width="48" height="48" rx="10"/>
+    <rect x="288" y="313" width="48" height="48" rx="10"/>
+    <rect x="288" y="367" width="48" height="48" rx="10"/>
+  </g>
+  <rect x="248" y="212" width="148" height="88" rx="18" fill="#3CEC85"/>
+</svg>

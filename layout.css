@@ -170,7 +170,7 @@ body.resizing-y { cursor: row-resize; }
 
 .group { margin-bottom: 14px; }
 .group-title.group-toggle { width: calc(100% - 12px); padding: 0; border: 0; background: transparent; text-align: left; cursor: default; }
-.group-title.group-toggle svg { transition: transform 140ms ease; }
+.group-title.group-toggle svg { transition: transform var(--motion-standard) var(--ease-ui); }
 .collapsible-group.collapsed .group-title.group-toggle svg { transform: rotate(-90deg); }
 .collapsible-group .group-content { display: grid; grid-template-rows: 1fr; overflow: hidden; }
 .collapsible-group.collapsed .group-content { display: none; }
@@ -180,7 +180,7 @@ body.resizing-y { cursor: row-resize; }
 .collection-node.drop-prefix::before, .request-node.drop-prefix::before { content: "|"; position: absolute; left: 3px; top: 50%; z-index: 2; color: var(--accent, #6ea8fe); font: 700 22px/1 var(--font-mono); transform: translateY(-52%); }
 .request-node[draggable="true"] { cursor: grab; }
 .collection-node { width: 100%; border: 0; background: transparent; font: inherit; text-align: left; }
-.collection-chevron { transition: transform 140ms ease; }
+.collection-chevron { transition: transform var(--motion-standard) var(--ease-ui); }
 .collection-tree.collapsed .collection-chevron { transform: rotate(-90deg); }
 .collection-tree.collapsed .collection-requests { display: none; }
 .collection-requests { display: grid; padding-left: 14px; }
@@ -190,6 +190,7 @@ body.resizing-y { cursor: row-resize; }
 .collection-empty { padding-left: 12px; }
 
 .group-title {
+  position: relative;
   display: flex;
   justify-content: space-between;
   margin: 10px 6px 6px;
@@ -197,7 +198,32 @@ body.resizing-y { cursor: row-resize; }
   font-size: 0.8462rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  transition: color var(--motion-fast) var(--ease-ui);
 }
+
+/* section rail — only when the group is focused or holds the active item, so the
+   sidebar shows one accent at a time instead of a wall of them */
+.group-title::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  width: 2px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 1px;
+  background: var(--accent-line);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform var(--motion-standard) var(--ease-ui);
+}
+
+.group:has(.nav-item.active, .index-item.active, .request-node.selected) > .group-title::before,
+.group:focus-within > .group-title::before,
+.group-title:focus-visible::before { transform: scaleY(1); }
+
+.group:has(.nav-item.active, .index-item.active, .request-node.selected) > .group-title,
+.group:focus-within > .group-title { color: var(--text-2); }
 
 .workspace {
   min-width: 0;
@@ -232,9 +258,27 @@ body.resizing-y { cursor: row-resize; }
   background: color-mix(in oklab, var(--pane), transparent 20%);
   cursor: default;
   position: relative;
-  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+  transition: background var(--motion-fast) var(--ease-ui), color var(--motion-fast) var(--ease-ui), border-color var(--motion-fast) var(--ease-ui);
   -webkit-user-drag: element;
 }
+
+/* active-tab accent underline — scaleX so it grows in place, never nudges layout */
+.tab::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent-line);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--motion-standard) var(--ease-ui);
+  pointer-events: none;
+}
+
+.tab.active::after { transform: scaleX(1); }
 
 /* svg icons default to their own native drag gesture in WebKit — let it bubble to .tab instead */
 .tab svg, .tab img { -webkit-user-drag: none; }
@@ -264,6 +308,9 @@ body.resizing-y { cursor: row-resize; }
   box-shadow: inset 0 1px 0 color-mix(in oklab, var(--text), transparent 96%);
 }
 
+.tab.active .tab-title,
+.tab.active > span:not([class]) { font-weight: 600; }
+
 .tab-close {
   margin-left: auto;
   width: 17px;
@@ -274,7 +321,17 @@ body.resizing-y { cursor: row-resize; }
   color: var(--text-3);
   font-size: 1rem;
   line-height: 1;
+  /* quiet until the tab is hovered/focused — fades and scales, keeps its box so nothing reflows */
+  opacity: 0.35;
+  transform: scale(0.86);
+  transition: opacity var(--motion-fast) var(--ease-ui), transform var(--motion-fast) var(--ease-ui),
+    color var(--motion-fast) var(--ease-ui), background var(--motion-fast) var(--ease-ui);
 }
+
+.tab:hover .tab-close,
+.tab:focus-within .tab-close,
+.tab.active .tab-close,
+.tab-close:focus-visible { opacity: 1; transform: none; }
 
 .tab-close:hover { color: var(--text); background: var(--pane-3); }
 

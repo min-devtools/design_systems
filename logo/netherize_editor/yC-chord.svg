@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- yC: a two-key chord — the second keypress completes the command -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="72" y="164" width="176" height="176" rx="40" fill="#3a4f75"/>
+  <rect x="92" y="178" width="136" height="136" rx="28" fill="#31456b"/>
+  <rect x="264" y="164" width="176" height="176" rx="40" fill="#2fbe6c"/>
+  <rect x="284" y="178" width="136" height="136" rx="28" fill="#3CEC85"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- yB: a keycap whose legend is the block caret — keyboard-first, modal -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="100" y="100" width="312" height="312" rx="64" fill="#3a4f75"/>
+  <rect x="124" y="116" width="264" height="264" rx="48" fill="#31456b"/>
+  <rect x="222" y="182" width="68" height="132" rx="14" fill="#3CEC85"/>
+</svg>

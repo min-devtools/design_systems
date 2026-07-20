@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vC: workbench split — explorer pane + editor pane with block caret -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="88" y="112" width="112" height="288" rx="22" fill="#31456b"/>
+  <rect x="224" y="112" width="200" height="288" rx="22" fill="#3a4f75"/>
+  <rect x="268" y="216" width="44" height="80" rx="10" fill="#3CEC85"/>
+</svg>

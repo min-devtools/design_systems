@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- yD: the workbench — explorer, editor, statusbar, caret parked in the buffer -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="88" y="100" width="88" height="280" rx="20" fill="#31456b"/>
+  <rect x="192" y="100" width="232" height="280" rx="20" fill="#3a4f75"/>
+  <rect x="232" y="158" width="56" height="164" rx="12" fill="#3CEC85"/>
+  <rect x="88" y="398" width="336" height="30" rx="15" fill="#31456b"/>
+</svg>

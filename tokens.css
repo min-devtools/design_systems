@@ -7,10 +7,20 @@
    that inherited inline value for the whole subtree — the Interface-font setting goes dead.
    No theme overrides the -default stacks, so they don't need body-level recomputation. */
 :root {
-  --font-body-default: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body-default: "Exo 2", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono-default: "Google Sans Code", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace;
   --font-body: var(--font-body-default);
   --font-mono: var(--font-mono-default);
+
+  /* Motion — Corporate archetype: compact, calm, decisive, keyboard-first. No overshoot.
+     fast = hover/press, standard = selection/expand/palette entry, slow = the rare big move.
+     Theme-independent, so :root-only like the fonts. */
+  --motion-fast: 120ms;
+  --motion-standard: 180ms;
+  --motion-slow: 260ms;
+  --ease-ui: cubic-bezier(.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(.05, .7, .1, 1);
+  --ease-exit: cubic-bezier(.3, 0, 1, 1);
 }
 
 :root, body {
@@ -70,6 +80,22 @@
   --syntax-boolean: var(--purple);
   --syntax-null: var(--red);
   --syntax-punctuation: var(--text-3);
+  --syntax-operator: var(--text-2);
+  --syntax-type: var(--orange);
+  --syntax-function: var(--blue-2);
+  --syntax-property: var(--syntax-key);
+  --syntax-variable: var(--text);
+  --syntax-comment: var(--text-3);
+  --syntax-parameter: var(--text-2);
+  --syntax-constant: var(--purple);
+  --syntax-tag: var(--orange);
+
+  /* One accent-based highlight system — rails, focused paths, selected fields, active
+     titles all draw from these instead of hardcoding color-mix() per component. */
+  --accent-line: var(--accent);
+  --accent-soft: color-mix(in oklab, var(--accent), transparent 86%);
+  --accent-soft-strong: color-mix(in oklab, var(--accent), transparent 74%);
+
   --surface-selected: color-mix(in oklab, var(--accent-primary), transparent 86%);
   --focus-ring: color-mix(in oklab, var(--accent-focus), transparent 84%);
   --modal-backdrop: color-mix(in oklab, var(--surface-app), transparent 28%);
@@ -136,4 +162,13 @@ body.light {
   --syntax-boolean: #be185d;
   --syntax-null: #be123c;
   --syntax-punctuation: #6b5f79;
+  --syntax-operator: #5b4a6e;
+  --syntax-type: #b45309;
+  --syntax-function: #1d4ed8;
+  --syntax-property: #7c3aed;
+  --syntax-variable: #3B1D7A;
+  --syntax-comment: #8b7fa0;
+  --syntax-parameter: #6533C7;
+  --syntax-constant: #be185d;
+  --syntax-tag: #b45309;
 }

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- yA: the existing keycap + N, refamilied — diagonal is the command path -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <rect x="108" y="108" width="296" height="296" rx="60" fill="none" stroke="#3a4f75" stroke-width="22"/>
+  <g stroke-width="40" stroke-linecap="round" fill="none">
+    <path d="M196 326 V186" stroke="#3a4f75"/>
+    <path d="M316 326 V186" stroke="#3a4f75"/>
+    <path d="M196 186 L316 326" stroke="#3CEC85"/>
+  </g>
+</svg>

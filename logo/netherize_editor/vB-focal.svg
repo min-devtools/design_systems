@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- vB: focal card on the spatial plane, related cards linked diagonally -->
+  <rect width="512" height="512" rx="116" fill="#1c2433"/>
+  <path d="M132 126 L380 386" stroke="#31456b" stroke-width="16" stroke-linecap="round"/>
+  <g fill="#3a4f75">
+    <rect x="76" y="86" width="112" height="80" rx="18"/>
+    <rect x="324" y="346" width="112" height="80" rx="18"/>
+  </g>
+  <rect x="190" y="210" width="132" height="92" rx="20" fill="#3CEC85"/>
+</svg>

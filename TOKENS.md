@@ -81,19 +81,67 @@ Theme-agnostic names that map onto the raw tokens above. Prefer these in new cod
 | `--syntax-boolean` | `--purple` | `#be185d` |
 | `--syntax-null` | `--red` | `#be123c` |
 | `--syntax-punctuation` | `--text-3` | `#6b5f79` |
+| `--syntax-operator` | `--text-2` | `#5b4a6e` |
+| `--syntax-type` | `--orange` | `#b45309` |
+| `--syntax-function` | `--blue-2` | `#1d4ed8` |
+| `--syntax-property` | `--syntax-key` | `#7c3aed` |
+| `--syntax-variable` | `--text` | `#3B1D7A` |
+| `--syntax-comment` | `--text-3` | `#8b7fa0` |
+| `--syntax-parameter` | `--text-2` | `#6533C7` |
+| `--syntax-constant` | `--purple` | `#be185d` |
+| `--syntax-tag` | `--orange` | `#b45309` |
+
+`tokens.css` owns these fallbacks (JSON trees, quick-query code, any CSS-rendered
+syntax). `syntax-themes.css` overrides them per selected editor theme, and
+`themeContract.ts` maps the computed values into Monaco — so all three stay in sync.
+
+## Highlight
+
+One accent-based highlight system. Rails, focused paths, selected fields and
+active titles read these instead of inlining `color-mix()` per component.
+
+| Token | Value |
+|-------|-------|
+| `--accent-line` | `var(--accent)` — 2px rails and underlines |
+| `--accent-soft` | `color-mix(in oklab, var(--accent), transparent 86%)` — selected row/cmd fill |
+| `--accent-soft-strong` | `color-mix(in oklab, var(--accent), transparent 74%)` — its 1px inset border |
+
+## Motion
+
+**Corporate** archetype: compact, calm, decisive, keyboard-first. No overshoot, no bounce.
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `--motion-fast` | `120ms` | hover, press, dialog/palette exit |
+| `--motion-standard` | `180ms` | selection, expand/collapse, palette entry, result reveal |
+| `--motion-slow` | `260ms` | the rare large move |
+| `--ease-ui` | `cubic-bezier(.2, 0, 0, 1)` | default for state changes |
+| `--ease-enter` | `cubic-bezier(.05, .7, .1, 1)` | things arriving |
+| `--ease-exit` | `cubic-bezier(.3, 0, 1, 1)` | things leaving |
+
+`prefers-reduced-motion: reduce` is handled globally at the bottom of `base.css`:
+durations collapse to 1ms and motion-only transforms are dropped, while opacity and
+color state changes stay legible. Looping progress indicators (`.loading-bar span`,
+`.req-progress span`, `.veil-spinner`) are re-pointed at a slow opacity pulse in
+`components.css` so they don't freeze mid-loop and read as "stuck".
 
 ## Typography
 
 | Token | Value |
 |-------|-------|
-| `--font-body` | `"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif` |
+| `--font-body` | `"Exo 2", system-ui, -apple-system, BlinkMacSystemFont, sans-serif` |
 | `--font-mono` | `"Google Sans Code", "Berkeley Mono", ui-monospace, Menlo, Consolas, monospace` |
 
 - Root: `html { font-size: 13px }` (overridable via `--ui-font-size`).
 - Body: `font: 450 1rem/1.45 var(--font-body)` — note weight **450**, not 400.
 - Mono (**Google Sans Code**, Berkeley Mono fallback) is used for: code, IDs,
   tables, status bar, badges, kbd pills, method tags, path chips, combobox values.
-- Both fonts are on Google Fonts — see README "Dependencies" for the load snippet.
+- **Exo 2 is bundled locally** (SIL OFL 1.1) as `fonts/exo2-{latin,latin-ext,vietnamese}.woff2`
+  and registered with `@font-face` at the top of `base.css` — one variable file per
+  unicode subset, `font-weight: 100 900`, `font-display: swap`. No CDN: Tauri CSP
+  blocks font hosts, and the apps must render offline.
+- The user's Interface Font setting still wins — apps set `--font-body` inline on
+  `documentElement`, which shadows the `--font-body-default` stack.
 - Section/group titles: `text-transform: uppercase; letter-spacing: .06em; color: var(--text-3)`.
 
 ## Layout dimensions
