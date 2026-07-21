@@ -82,9 +82,8 @@
   z-index: 35;
   width: 28px;
   height: 22px;
-  background: color-mix(in oklab, var(--pane), transparent 6%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* no backdrop-filter: always-visible blur keeps WKWebView compositing every frame */
+  background: var(--pane);
   box-shadow: 0 8px 20px color-mix(in oklab, var(--surface-app), transparent 70%);
 }
 
@@ -1273,6 +1272,11 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   width: 35%;
   border-radius: 2px;
   background: linear-gradient(90deg, transparent, var(--blue), transparent);
+}
+
+/* animate only while shown — bars idle at opacity:0 but stay mounted, and an
+   ungated infinite animation on `left` costs style+layout every frame */
+.loading-bar.on span {
   animation: loading-bar-slide 1.05s ease-in-out infinite;
 }
 
@@ -1306,8 +1310,6 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   justify-items: center;
   gap: 10px;
   background: color-mix(in oklab, var(--pane), transparent 40%);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
   color: var(--text-2);
   font-size: 0.9231rem;
   opacity: 0;
@@ -1318,6 +1320,9 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
 .section-veil.on {
   opacity: 1;
   pointer-events: auto;
+  /* blur only while visible — opacity:0 with backdrop-filter still costs compositing */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .veil-spinner {
@@ -1326,6 +1331,10 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   border: 2px solid var(--line-2);
   border-top-color: var(--blue);
   border-radius: 50%;
+}
+
+/* spin only while the veil is shown — see .loading-bar.on note */
+.section-veil.on .veil-spinner {
   animation: veil-spin 0.8s linear infinite;
 }
 
@@ -1360,7 +1369,7 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
 @media (prefers-reduced-motion: reduce) {
   /* the global kill-switch in base.css would freeze these mid-loop and read as "stuck";
      swap the travelling bar / spin for a low-frequency opacity pulse instead. */
-  .loading-bar span,
+  .loading-bar.on span,
   .req-progress.on span {
     animation: reduced-pulse 1.6s ease-in-out infinite !important;
     animation-iteration-count: infinite !important;
@@ -1369,7 +1378,7 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
     transform: none !important;
   }
 
-  .veil-spinner {
+  .section-veil.on .veil-spinner {
     animation: reduced-pulse 1.6s ease-in-out infinite !important;
     animation-iteration-count: infinite !important;
     border-top-color: var(--accent-line);
