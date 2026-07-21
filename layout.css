@@ -253,10 +253,11 @@ body.resizing-y { cursor: row-resize; }
 
 .tab {
   height: 31px;
-  min-width: 96px;
-  /* generous cap so "title · connection-name" survives without ellipsis; tabs keep
-     their natural width and the bar scrolls instead of squeezing them */
-  max-width: 584px;
+  /* floor keeps a short-titled tab a comfortable click target instead of a stub;
+     cap lets "title · connection-name" survive without ellipsis. Tabs keep their
+     natural width between the two — the bar scrolls instead of squeezing them. */
+  min-width: 132px;
+  max-width: 500px;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;

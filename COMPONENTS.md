@@ -65,7 +65,7 @@ hover, then a `var(--blue)` bar with a glow (`box-shadow`) fades in.
   unreadable. Each `TabsBar` scrolls the active tab into view on change, since
   ⌘1-9 / the palette / closing a tab can land on one that is off-screen. The
   `.tab-add` button lives in the same scroller and scrolls away with the tabs.
-- `.tab` — 31px tall, `10px 10px 0 0` radius, min 96 / max 584px, draggable.
+- `.tab` — 31px tall, `10px 10px 0 0` radius, min 132 / max 500px, draggable.
 - `.tab.active` — blue top-gradient wash + colored border + hairline top
   highlight, bottom border transparent (fuses into content).
 - `.tab.dragging` (0.4 opacity) / `.tab.drag-over` (blue insertion bar `::before`).
@@ -90,7 +90,9 @@ from that one declaration:
 - `.tab::after` — the active tab's 2px underline.
 - `.tab.active` — the top gradient wash and the border.
 - `.tab-conn` — the owner's name after the title, muted, `·`-prefixed. Truncates
-  before the title does, since the title is the more specific label.
+  before the title does, since the title is the more specific label. Omitted when
+  it equals the title — git_min names a repo tab after the repo, and "myrepo ·
+  myrepo" is noise.
 
 Inactive tabs are **not** tinted: a busy tab bar would turn into stripes, and
 the dot already carries identity there.
@@ -261,6 +263,8 @@ Dense, sticky-header, alternating rows, tabular numerics.
 
 ## JSON tree
 
+### Static tree
+
 ```html
 <pre class="json-tree">{
   <span class="syntax-key">"took"</span>: <span class="syntax-number">12</span>,
@@ -272,6 +276,69 @@ Dense, sticky-header, alternating rows, tabular numerics.
 Spans: `.syntax-key` `.syntax-string` `.syntax-number` `.syntax-bool`
 `.syntax-null` (italic) `.syntax-punc`/`.syntax-colon`. Mono, 1.75 line-height,
 text-selectable. Same classes work in `.quick-query-code`.
+
+### Interactive JSON tree viewer (right-dock inspector)
+
+Used for Kafka payloads, Redis values, log JSON snippets — any structured payload
+in the right inspector. Standard markup:
+
+```html
+<div class="json-dock">
+  <div class="json-tree-search">
+    <Icon name="search" />
+    <input placeholder="Find in value…" />
+    <button class="case-toggle">Aa</button>   <!-- case-sensitive toggle -->
+    <span class="match-count">3/12</span>
+  </div>
+
+  <div class="json-dock-head">
+    <span>12 fields</span>
+    <div class="dock-actions">
+      <button class="tool-btn"><Icon name="copy" /> Raw</button>
+      <button class="tool-btn"><Icon name="copy" /> Pretty</button>
+      <button class="tool-btn icon-only" title="Expand all"><Icon name="chevrons-down" /></button>
+      <button class="tool-btn icon-only" title="Collapse all"><Icon name="chevrons-up" /></button>
+    </div>
+  </div>
+
+  <div class="json-tree-view" role="tree">
+    <div class="json-tree-content">
+      <div class="json-tree-line">
+        <button class="json-tree-toggle" aria-expanded="true"><Icon name="chevron-right" /></button>
+        <span class="tok-key">"user"</span><span class="json-tree-colon">: </span>
+        <span class="json-tree-bracket tok-br-0">{</span>
+        ...
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+**Behavior**
+
+- Search: `⌘F` opens `.json-tree-search`, `Escape` closes it. Default
+  case-insensitive; the `Aa` button toggles case-sensitive. Matches are
+  highlighted with `<mark>` inside the tree; ancestor nodes auto-expand so the
+  highlight is visible. The tree never hides non-matching nodes.
+- Expand/collapse: each container node has a `.json-tree-toggle` with a
+  `chevron-right` icon that rotates `90deg` when `aria-expanded="true"`.
+  Expand-all / collapse-all use `chevrons-down` / `chevrons-up`.
+- Copy actions: `Raw` copies the original text; `Pretty` copies formatted JSON
+  when the value is JSON.
+- Non-JSON values render in `.json-tree-view.json-tree-raw` with
+  `.json-tree-raw-text`.
+
+**Token classes**
+
+| Class | Meaning |
+|-------|---------|
+| `.tok-key` | Object key |
+| `.tok-str` | String value |
+| `.tok-num` | Number |
+| `.tok-bool` | Boolean / null |
+| `.tok-br-0/1/2` | Brackets, cycled by depth |
+| `.json-tree-punc` | Comma, colon |
+| `.json-tree-summary` | Collapsed count label |
 
 **JSON editor chrome** (Monaco wrapper, shared by both apps):
 `.json-editor-shell` + `.json-editor-tools` — a 32px strip with a valid/invalid
