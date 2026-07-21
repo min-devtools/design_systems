@@ -175,10 +175,16 @@ body.resizing-y { cursor: row-resize; }
 .collapsible-group .group-content { display: grid; grid-template-rows: 1fr; overflow: hidden; }
 .collapsible-group.collapsed .group-content { display: none; }
 .collection-tree { margin-bottom: 2px; border-radius: 6px; }
+/* divide adjacent collections so the list doesn't read as one flat blob */
+.collection-tree:not(:last-child) { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
 .collection-tree.drop-target { outline: 1px dashed var(--accent, #6ea8fe); outline-offset: -1px; background: color-mix(in srgb, var(--accent, #6ea8fe) 12%, transparent); }
 .collection-node.drop-prefix, .request-node.drop-prefix { position: relative; }
 .collection-node.drop-prefix::before, .request-node.drop-prefix::before { content: "|"; position: absolute; left: 3px; top: 50%; z-index: 2; color: var(--accent, #6ea8fe); font: 700 22px/1 var(--font-mono); transform: translateY(-52%); }
 .request-node[draggable="true"] { cursor: grab; }
+/* WKWebView won't start element drags under global `user-select:none` without this — same fix as .tab.
+   Child svg icons carry their own native drag gesture, so neutralize them or the row never drags. */
+.collection-node, .request-node { -webkit-user-drag: element; }
+.collection-node svg, .request-node svg { -webkit-user-drag: none; }
 .collection-node { width: 100%; border: 0; background: transparent; font: inherit; text-align: left; }
 .collection-chevron { transition: transform var(--motion-standard) var(--ease-ui); }
 .collection-tree.collapsed .collection-chevron { transform: rotate(-90deg); }
@@ -298,15 +304,15 @@ body.resizing-y { cursor: row-resize; }
 /* svg icons default to their own native drag gesture in WebKit — let it bubble to .tab instead */
 .tab svg, .tab img { -webkit-user-drag: none; }
 
-/* title label: single line, ellipsis when tab is narrow; truncate on the left so the repo name stays visible */
+/* title label: single line, ellipsis on the right when the tab is narrow.
+   NB: don't use `direction: rtl` for left-side truncation — it reorders bidi-neutral
+   characters, so a title like "[VOR] Live History" renders as "Live History [VOR]". */
 .tab-title, .tab > span:not([class]) {
   flex: 1 1 auto;
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  direction: rtl;
-  text-align: left;
 }
 
 .tab-method { flex: none; font-size: 0.7692rem; }
