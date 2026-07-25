@@ -69,8 +69,8 @@
   --row-alt: rgba(255, 255, 255, 0.04);
   --glass: rgba(24, 31, 44, 0.82);
   --shadow: 0 18px 60px color-mix(in oklab, var(--surface-app), transparent 45%);
-  --left-w: 258px;
-  --right-w: 328px;
+  --left-w: 322px;
+  --right-w: 410px;
   --query-top: 48vh;
   --request-top: 48%;
   --editor-bg: #1c2433;

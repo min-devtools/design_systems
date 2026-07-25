@@ -414,7 +414,7 @@ body.inspector-unavailable .panel-toggle.panel-corner.right {
   pointer-events: none;
 }
 
-body.compact { --left-w: 230px; --right-w: 300px; }
+body.compact { --left-w: 298px; --right-w: 406px; }
 
 body.compact .main { grid-template-columns: var(--left-w) minmax(520px, 1fr) var(--right-w); }
 

@@ -41,6 +41,13 @@ required — plain classes. All sizes/colors below are the real shipped values.
 **Resize handles:** `.resize-handle.vertical.left` / `.right` — invisible until
 hover, then a `var(--blue)` bar with a glow (`box-shadow`) fades in.
 
+**Auto-collapse on resize (Postman-style):** When a user drags a dock ≥ 150px
+past its `min-width` boundary (left: 298px, right: 406px), the dock collapses.
+Below that overshoot it just holds at the min-width — no timer.
+
+- **Restore:** toggling the dock back open (⌘B / ⌘R / panel-toggle button)
+  restores the last saved width from `localStorage`.
+
 ---
 
 ## Tabs (the signature element)
