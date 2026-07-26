@@ -37,7 +37,11 @@
   display: grid;
   position: relative;
   grid-template-columns: var(--left-w) minmax(520px, 1fr) var(--right-w);
+  transition: grid-template-columns var(--motion-standard) var(--ease-ui);
 }
+
+/* live resize drags set --left-w/--right-w every pointermove — a transition here would lag the cursor */
+body.resizing .main { transition: none; }
 
 .sidebar { grid-column: 1; }
 
@@ -172,8 +176,12 @@ body.resizing-y { cursor: row-resize; }
 .group-title.group-toggle { width: calc(100% - 12px); padding: 0; border: 0; background: transparent; text-align: left; cursor: default; }
 .group-title.group-toggle svg { transition: transform var(--motion-standard) var(--ease-ui); }
 .collapsible-group.collapsed .group-title.group-toggle svg { transform: rotate(-90deg); }
-.collapsible-group .group-content { display: grid; grid-template-rows: 1fr; overflow: hidden; }
-.collapsible-group.collapsed .group-content { display: none; }
+/* max-height, not grid-template-rows: 1fr — group-content holds several nav-item children, and a
+   1fr/0fr track only collapses a single grid item; extras spill into their own auto-sized implicit
+   rows and ignore it. The cap just needs to clear real content (a nav list, never anywhere near
+   2000px) so the transition reads as a height animation instead of an abrupt cutoff. */
+.collapsible-group .group-content { display: grid; overflow: hidden; max-height: 2000px; transition: max-height var(--motion-standard) var(--ease-ui); }
+.collapsible-group.collapsed .group-content { max-height: 0; }
 .collection-tree { margin-bottom: 2px; border-radius: 6px; }
 /* divide adjacent collections so the list doesn't read as one flat blob */
 .collection-tree:not(:last-child) { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
@@ -188,8 +196,9 @@ body.resizing-y { cursor: row-resize; }
 .collection-node { width: 100%; border: 0; background: transparent; font: inherit; text-align: left; }
 .collection-chevron { transition: transform var(--motion-standard) var(--ease-ui); }
 .collection-tree.collapsed .collection-chevron { transform: rotate(-90deg); }
-.collection-tree.collapsed .collection-requests { display: none; }
-.collection-requests { display: grid; padding-left: 14px; }
+.collection-requests { display: grid; padding-left: 14px; overflow: hidden; max-height: 2000px; transition: max-height var(--motion-standard) var(--ease-ui); }
+/* same max-height reasoning as .group-content above — multiple request-node children per collection */
+.collection-tree.collapsed .collection-requests { max-height: 0; }
 .nav-item.request-node { width: 100%; grid-template-columns: 38px minmax(0, 1fr) auto; border: 0; background: transparent; font: inherit; text-align: left; }
 .collection-node > span:nth-child(2), .request-node > span:nth-child(2) { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .request-node.selected:not(.active) { box-shadow: inset 2px 0 0 var(--accent, #6ea8fe); background: color-mix(in srgb, var(--accent, #6ea8fe) 8%, transparent); }

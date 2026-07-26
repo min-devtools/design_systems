@@ -1066,6 +1066,14 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
 .sync-badge.synced { color: var(--green); }
 .sync-badge.dirty { color: var(--orange); }
 
+/* sync: elastic_min's and requests_min's CommandPalette.tsx now drive .command/.palette enter+exit
+   with `motion` (AnimatePresence) instead of these keyframes, so on those two apps the two run
+   redundantly on entrance and the keyframes are dead on exit (no exit counterpart). Left as-is here
+   because kafka_ui_min, redis_min, git_min, log_min still have zero JS animation on their
+   CommandPalette and depend on this CSS for their only entrance motion — removing it would regress
+   them to an instant pop-in. When you give another app's CommandPalette a motion pass, mirror
+   elastic_min's AnimatePresence + initial/animate/exit and then strip that app's usage of these
+   keyframes (or, once every app has migrated, delete `animation:` here and these two @keyframes). */
 .command {
   position: fixed;
   inset: 0;
@@ -1136,6 +1144,10 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
 }
 .cmd.active mark, .cmd:hover mark { color: var(--blue-2); }
 
+/* sync: elastic_min's and requests_min's Toast.tsx drive this with `motion` (AnimatePresence, spring
+   in/out) now — same redundant-entrance / dead-exit situation as .command/.palette above. The rest
+   of the family still relies on this keyframe as its only toast animation — don't strip it here
+   until they get the same motion pass. See the .command comment above for the migrate-then-strip order. */
 .toast {
   position: fixed;
   right: 24px;
@@ -1211,6 +1223,10 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
 
 .diff-code:last-child { border-right: 0; }
 
+/* sync: elastic_min's and requests_min's Dialog.tsx (+ ColorPicker.tsx, same class) drive this with
+   `motion` now — same redundant-entrance / dead-exit situation as .command/.palette and .toast above.
+   The rest of the family still depends on this keyframe as their only prompt/confirm-dialog
+   animation — migrate-then-strip, see the .command comment above. */
 .prompt-dialog {
   width: min(420px, calc(100vw - 80px));
   background: var(--window);

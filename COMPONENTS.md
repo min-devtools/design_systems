@@ -391,9 +391,61 @@ buttons.
 - `.command` / `.palette` — centered, 720px max, 14px radius, blur(28px).
 - `.modal` / `.prompt-dialog` — centered 420px card.
 - `.index-context-menu` / `.context-item` (`.danger` variant) — floating menu.
-- `.toast` — bottom-right, slides in (`@keyframes in`).
+- `.toast` — bottom-right. CSS `@keyframes in` is the fallback entrance for apps that haven't
+  taken a Motion pass yet; migrated apps drive it with `motion` instead — see **Motion** below.
 - `.diff` + `.diff-head`/`-body`/`-foot`/`-code`, with `.added`/`.removed`
   inline highlights — side-by-side diff modal.
+
+---
+
+## Motion
+
+Package: [`motion`](https://motion.dev) (the maintained successor to `framer-motion`). Import from
+`motion/react`. Not a CSS-only dependency — this is the one JS library in the family's design
+system, alongside `lucide-react`.
+
+**Status**: `elastic_min` and `requests_min` have taken the motion pass. `kafka_ui_min`,
+`redis_min`, `git_min`, `log_min` haven't yet — they still get their overlay entrances from the
+CSS `@keyframes` in `components.css` (`.command`/`.palette`, `.toast`, `.prompt-dialog`). Give a new
+app the same pass by copying the components below and dropping its own local keyframe usage; once
+every app has migrated, delete the now-dead `animation:` declarations and keyframes from
+`components.css` (each has a `sync:` comment marking it).
+
+**What still stays plain CSS transition** — don't reach for Motion here, the value being animated
+isn't React state, it's a CSS custom property flipped by a class toggle:
+- Dock collapse (`.main { transition: grid-template-columns var(--motion-standard) var(--ease-ui); }`,
+  in `layout.css`, canonical). Pair with `body.resizing .main { transition: none; }` so a live drag
+  isn't fighting a transition.
+- Any panel/pane resize driven by a CSS var written on every `pointermove` (query editor split,
+  request/response split) — same reasoning, same `body.resizing… { transition: none; }` escape hatch.
+- Collapsible sidebar sections with variable, unbounded child count (`.group-content`,
+  `.collection-requests`) — `max-height` transition with a generous cap, not `grid-template-rows:
+  1fr → 0fr` (that trick only collapses a *single* grid item; a list of nav-item children spills
+  into implicit auto-rows that ignore it) and not `AnimatePresence`/`layout` (mount-cost per toggle
+  for content that isn't actually entering/exiting, just resizing).
+
+**What uses `motion`** — the values below are the extracted, load-bearing constants. Reuse them
+verbatim; don't invent new durations/springs per component.
+
+| Moment | Pattern |
+|---|---|
+| Overlay backdrop (`.modal`, `.command`) | `motion.div`, `initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}`, `transition={{duration:0.16–0.18, ease:[0.32,0.72,0,1]}}`, wrapped in `AnimatePresence` |
+| Overlay content (dialog card, palette panel, ColorPicker) | `motion.div`, `initial={{opacity:0,scale:0.95,y:8}} animate={{opacity:1,scale:1,y:0}} exit={{opacity:0,scale:0.95,y:8}}`, `transition={{type:"spring",stiffness:420,damping:30}}` |
+| Toast | same shape, `y:24→0` on enter / `y:16` on exit, `{stiffness:420,damping:28}` |
+| Context menu (`.index-context-menu`) | `motion.div`, `initial={{opacity:0,scale:0.93,y:-4}} animate={{opacity:1,scale:1,y:0}} exit={{opacity:0,scale:0.93}}`, `transition={{duration:0.14,ease:[0.32,0.72,0,1]}}` — see `ui/ContextMenu.tsx` |
+| Command palette panel | same as overlay content but `y:-12→0`, `{stiffness:450,damping:32}` (opens downward from the top, not centered) |
+| List row add/remove/reorder (tabs, sidebar nav items) | `motion.div`/`motion.button` with `layout`, wrapped in `AnimatePresence` (`mode="popLayout"` for horizontal/inline lists like tabs). Vertical list rows: `initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}`. Horizontal (tabs): `initial={{opacity:0,scale:0.9,y:-4}} animate={{opacity:1,scale:1,y:0}} exit={{opacity:0,scale:0.9,y:4}}`. Both: `{type:"spring",stiffness:450–500,damping:32–35}` |
+| Button press feedback | `whileTap={{scale:0.96}}` on every `ToolButton`/`MiniTabs` button — universal, applies even where CSS already handles `:hover`. Small icon-only affordances (tab close button) add `whileHover={{scale:1.15}}` |
+
+**Shared components** (mirror per-app, JS isn't symlinked like the CSS — only `tokens/themes/base/
+layout/components.css` are): `ui/ContextMenu.tsx` (generic `{icon,label,kbd,danger,onClick}[]` menu,
+used for every right-click menu in an app) and `ui/MiniTabs.tsx` (the pill tab-switcher, e.g. flow
+dock's Step detail/Step Result). `ui/ToolButton.tsx` gets a `whileTap` wrapper and an `Omit<...,
+"onDrag"|"onDragStart"|"onDragEnd"|"onAnimationStart"|"onAnimationEnd">` on its props type — those
+names collide with Motion's own gesture props. The same collision hits any `motion.div`/`motion.button`
+that also needs native HTML5 drag (tab reorder, sidebar drag-and-drop): type the handler `(e: any)`
+rather than fighting Motion's event types, matching the existing drag handlers in `TabsBar.tsx`/
+`Sidebar.tsx`.
 
 ---
 

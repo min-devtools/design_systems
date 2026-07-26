@@ -72,7 +72,8 @@ If someone opens the app, these traits identify it at a glance:
 
 ## Dependencies (to build a real app, not just read)
 
-The CSS assumes two fonts and one icon lib exist. Add them:
+The CSS assumes two fonts and one icon lib exist, and the family's motion pass
+uses one animation lib. Add them:
 
 **Fonts** — Exo 2 (UI) + Google Sans Code (mono).
 
@@ -90,8 +91,17 @@ Google Sans Code is still an external load (Tauri apps bundle it themselves):
 
 **Icons** — lucide: `npm i lucide-react`. See `ICONS.md`.
 
+**Motion** — [`motion`](https://motion.dev): `npm i motion`, import from
+`motion/react`. Optional, but every app that has taken the family's motion
+pass (overlays, context menus, list rows — see `COMPONENTS.md`'s **Motion**
+section) uses this exact package, not `framer-motion` or a homegrown CSS
+approach, so a new app's overlay entrances read identically once its own pass
+lands.
+
 Pure-CSS parts (`tokens/themes/base/layout/components.css`) have **zero**
-dependencies — drop in and go.
+dependencies — drop in and go. `motion` is only needed once an app does its
+JS-driven motion pass; until then the CSS `@keyframes` fallbacks in
+`components.css` carry the same overlays' entrance animation on their own.
 
 ## Non-negotiable rules
 
