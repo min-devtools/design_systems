@@ -1066,14 +1066,11 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
 .sync-badge.synced { color: var(--green); }
 .sync-badge.dirty { color: var(--orange); }
 
-/* sync: elastic_min's and requests_min's CommandPalette.tsx now drive .command/.palette enter+exit
-   with `motion` (AnimatePresence) instead of these keyframes, so on those two apps the two run
-   redundantly on entrance and the keyframes are dead on exit (no exit counterpart). Left as-is here
-   because kafka_ui_min, redis_min, git_min, log_min still have zero JS animation on their
-   CommandPalette and depend on this CSS for their only entrance motion — removing it would regress
-   them to an instant pop-in. When you give another app's CommandPalette a motion pass, mirror
-   elastic_min's AnimatePresence + initial/animate/exit and then strip that app's usage of these
-   keyframes (or, once every app has migrated, delete `animation:` here and these two @keyframes). */
+/* sync 2026-07-26: every app (elastic, requests, log, kafka_ui, redis, git) now drives
+   .command/.palette/.toast/.prompt-dialog enter+exit with `motion` (AnimatePresence), so the
+   entrance `animation:` declarations were removed here per the migration plan. The @keyframes
+   stay defined for any future non-motion consumer; each app also carries a defensive
+   `animation: none` override in its own views.css. */
 .command {
   position: fixed;
   inset: 0;
@@ -1082,7 +1079,6 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   padding-top: 92px;
   background: var(--modal-backdrop);
   z-index: 20;
-  animation: palette-backdrop var(--motion-fast) var(--ease-enter);
 }
 
 @keyframes palette-backdrop {
@@ -1096,10 +1092,11 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
 }
 
 .palette {
-  animation: palette-in var(--motion-standard) var(--ease-enter);
   width: min(720px, calc(100vw - 64px));
   background: var(--glass);
-  backdrop-filter: blur(28px) saturate(160%);
+  /* 16px reads the same as 28px over app-sized surfaces, and first-open raster
+     cost measured ~2× cheaper (53ms → tolerable) on software compositors */
+  backdrop-filter: blur(16px) saturate(160%);
   border: 1px solid var(--line-2);
   border-radius: 14px;
   box-shadow: var(--shadow);
@@ -1236,7 +1233,6 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   padding: 16px;
   display: grid;
   gap: 12px;
-  animation: in var(--motion-standard) var(--ease-enter);
 }
 
 .prompt-dialog-msg { color: var(--text-2); font-size: 0.9231rem; white-space: pre-line; margin: 0; }
