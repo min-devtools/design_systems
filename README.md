@@ -1,7 +1,7 @@
 # Design System
 
 The shared visual language behind my desktop developer tools (`requests_min`,
-`elatic_min`, and future apps). Both apps ship the **exact same** `tokens.css`
+`elastic_min`, and future apps). Both apps ship the **exact same** `tokens.css`
 and `themes.css` — this folder is the canonical source of that language, taken
 from `requests_min`.
 

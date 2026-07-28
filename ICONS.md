@@ -76,7 +76,7 @@ Each app adds domain glyphs on top of the core, same pattern:
 - **requests_min** — `send` (Send), `request` (FileCode2), `globe` (Globe),
   `grpc` (Boxes), `ws` (Radio), `key` (Key), `folder` (FolderOpen),
   `list` (List), `chevron-down` (ChevronDown).
-- **elatic_min** — `query` (FileCode2), `quick-query` (SearchCheck),
+- **elastic_min** — `query` (FileCode2), `quick-query` (SearchCheck),
   `indexes`/`database` (Database), `mapping` (Braces), `table` (Table2),
   `docs` (Files), `cluster` (Activity), `filter` (Filter), `play` (Play),
   `zap` (Zap), `download` (Download), `status` (CircleDot),

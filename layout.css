@@ -64,24 +64,27 @@ body.inspector-unavailable .inspector {
   display: none;
 }
 
-body.left-collapsed .sidebar-top,
-body.left-collapsed .group-title,
-body.left-collapsed .nav-item > span:not(:first-child),
-body.left-collapsed .index-item > span:not(:first-child),
-body.left-collapsed .nav-item > .badge,
-body.left-collapsed .empty-note,
-body.left-collapsed .collection-requests {
+/* scoped to .sidebar — .nav-item/.empty-note are reused by non-sidebar views
+   (e.g. TemplatesView's template list, ClusterView's connect-prompt); an unscoped
+   rule here hid their text/search controls too whenever the dock collapsed. */
+body.left-collapsed .sidebar .sidebar-top,
+body.left-collapsed .sidebar .group-title,
+body.left-collapsed .sidebar .nav-item > span:not(:first-child),
+body.left-collapsed .sidebar .index-item > span:not(:first-child),
+body.left-collapsed .sidebar .nav-item > .badge,
+body.left-collapsed .sidebar .empty-note,
+body.left-collapsed .sidebar .collection-requests {
   display: none;
 }
 
 /* ponytail: collapse all collections visually while the dock is collapsed;
    per-collection state stays intact so re-expanding restores it. */
-body.left-collapsed .collection-tree .collection-chevron { transform: rotate(-90deg); }
+body.left-collapsed .sidebar .collection-tree .collection-chevron { transform: rotate(-90deg); }
 
-body.left-collapsed .side-scroll { height: 100%; padding: 6px; }
-body.left-collapsed .group { margin-bottom: 8px; }
-body.left-collapsed .nav-item,
-body.left-collapsed .index-item {
+body.left-collapsed .sidebar .side-scroll { height: 100%; padding: 6px; }
+body.left-collapsed .sidebar .group { margin-bottom: 8px; }
+body.left-collapsed .sidebar .nav-item,
+body.left-collapsed .sidebar .index-item {
   display: flex;
   justify-content: center;
   padding: 0;
