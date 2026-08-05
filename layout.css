@@ -370,9 +370,10 @@ body.resizing-y { cursor: row-resize; }
 
 .tab-close:hover { color: var(--text); background: var(--pane-3); }
 
-.tab.dragging { opacity: 0.4; }
+.tab.dragging { opacity: 0.4; transition: opacity var(--motion-fast) var(--ease-ui); }
 
-.tab.drag-over::before {
+/* insertion-point bar: always present, opacity-toggled so it fades rather than pops */
+.tab::before {
   content: "";
   position: absolute;
   left: -3px;
@@ -381,7 +382,12 @@ body.resizing-y { cursor: row-resize; }
   width: 2px;
   border-radius: 1px;
   background: var(--blue);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-ui);
 }
+
+.tab.drag-over::before { opacity: 1; }
 
 .tab-add {
   height: 31px;

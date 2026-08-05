@@ -67,6 +67,7 @@
   --purple: #F38CEC;
   --row: rgba(255, 255, 255, 0.025);
   --row-alt: rgba(255, 255, 255, 0.04);
+  --row-hover: rgba(255, 255, 255, 0.05);
   --glass: rgba(24, 31, 44, 0.82);
   --shadow: 0 18px 60px color-mix(in oklab, var(--surface-app), transparent 45%);
   --left-w: 322px;
@@ -95,21 +96,22 @@
   --status-warning: var(--orange);
   --status-danger: var(--red);
   --status-info: var(--blue-2);
-  --syntax-key: var(--blue);
-  --syntax-string: var(--green);
-  --syntax-number: var(--blue-2);
-  --syntax-boolean: var(--purple);
-  --syntax-null: var(--red);
-  --syntax-punctuation: var(--text-3);
-  --syntax-operator: var(--text-2);
-  --syntax-type: var(--orange);
-  --syntax-function: var(--blue-2);
-  --syntax-property: var(--syntax-key);
-  --syntax-variable: var(--text);
-  --syntax-comment: var(--text-3);
-  --syntax-parameter: var(--text-2);
-  --syntax-constant: var(--purple);
-  --syntax-tag: var(--orange);
+  /* Syntax colors stay distinct at diagram scale and clear AA contrast on #1c2433. */
+  --syntax-key: #c9a7ff;
+  --syntax-string: #5ff59a;
+  --syntax-number: #79d0ff;
+  --syntax-boolean: #f6a6ee;
+  --syntax-null: #ff8066;
+  --syntax-punctuation: #95a5c0;
+  --syntax-operator: #c5cee0;
+  --syntax-type: #ffb27a;
+  --syntax-function: #79d0ff;
+  --syntax-property: #a8c5ee;
+  --syntax-variable: #dce5f4;
+  --syntax-comment: #8fa4c8;
+  --syntax-parameter: #c5cee0;
+  --syntax-constant: #f6a6ee;
+  --syntax-tag: #ffb27a;
 
   /* One accent-based highlight system — rails, focused paths, selected fields, active
      titles all draw from these instead of hardcoding color-mix() per component. */
@@ -169,7 +171,9 @@ body.light {
   /* Overlay */
   --glass: rgba(255, 255, 255, 0.92);
   --modal-backdrop: rgba(36, 26, 62, 0.25);
-  --shadow: rgba(59, 26, 110, 0.10);
+  /* full box-shadow value — a bare color makes `box-shadow: var(--shadow)` invalid,
+     so every floating glass pill silently lost its elevation in light themes */
+  --shadow: 0 18px 48px rgba(59, 26, 110, 0.12), 0 2px 8px rgba(59, 26, 110, 0.08);
 
   /* Editor */
   --editor-bg: #FFFFFF;
