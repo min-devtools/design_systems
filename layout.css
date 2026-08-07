@@ -92,7 +92,7 @@ body.left-collapsed .sidebar .index-item {
 
 .resize-handle {
   position: absolute;
-  z-index: 30;
+  z-index: var(--z-chrome);
   background: transparent;
   touch-action: none;
 }
@@ -103,7 +103,7 @@ body.left-collapsed .sidebar .index-item {
   opacity: 0;
   background: var(--blue);
   box-shadow: 0 0 18px color-mix(in oklab, var(--blue), transparent 45%);
-  transition: opacity 120ms ease;
+  transition: opacity var(--motion-fast) ease;
 }
 
 .resize-handle:hover::after,
@@ -123,7 +123,7 @@ body.resizing .resize-handle::after {
   bottom: 8px;
   left: 4px;
   width: 2px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .resize-handle.left {
@@ -168,9 +168,8 @@ body.resizing-y { cursor: row-resize; }
   color: var(--text);
   background: var(--pane-2);
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   padding: 0 10px;
-  outline: none;
 }
 
 .side-scroll, .inspector-scroll { height: calc(100% - 55px); overflow: auto; padding: 10px; }
@@ -185,12 +184,12 @@ body.resizing-y { cursor: row-resize; }
    2000px) so the transition reads as a height animation instead of an abrupt cutoff. */
 .collapsible-group .group-content { display: grid; overflow: hidden; max-height: 2000px; transition: max-height var(--motion-standard) var(--ease-ui); }
 .collapsible-group.collapsed .group-content { max-height: 0; }
-.collection-tree { margin-bottom: 2px; border-radius: 6px; }
+.collection-tree { margin-bottom: 2px; border-radius: var(--radius-sm); }
 /* divide adjacent collections so the list doesn't read as one flat blob */
 .collection-tree:not(:last-child) { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
 .collection-tree.drop-target { outline: 1px dashed var(--accent, #6ea8fe); outline-offset: -1px; background: color-mix(in srgb, var(--accent, #6ea8fe) 12%, transparent); }
 .collection-node.drop-prefix, .request-node.drop-prefix { position: relative; }
-.collection-node.drop-prefix::before, .request-node.drop-prefix::before { content: "|"; position: absolute; left: 3px; top: 50%; z-index: 2; color: var(--accent, #6ea8fe); font: 700 22px/1 var(--font-mono); transform: translateY(-52%); }
+.collection-node.drop-prefix::before, .request-node.drop-prefix::before { content: "|"; position: absolute; left: 3px; top: 50%; z-index: var(--z-raised); color: var(--accent, #6ea8fe); font: 700 22px/1 var(--font-mono); transform: translateY(-52%); }
 .request-node, .collection-node { cursor: grab; touch-action: none; }
 /* WKWebView won't start element drags under global `user-select:none` without this — same fix as .tab.
    Child svg icons carry their own native drag gesture, so neutralize them or the row never drags. */
@@ -213,7 +212,7 @@ body.resizing-y { cursor: row-resize; }
   justify-content: space-between;
   margin: 10px 6px 6px;
   color: var(--text-3);
-  font-size: 0.8462rem;
+  font-size: var(--fs-sm);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   transition: color var(--motion-fast) var(--ease-ui);
@@ -327,7 +326,7 @@ body.resizing-y { cursor: row-resize; }
   text-overflow: ellipsis;
 }
 
-.tab-method { flex: none; font-size: 0.7692rem; }
+.tab-method { flex: none; font-size: var(--fs-xs); }
 
 .tab:hover { color: var(--text); background: var(--pane-2); }
 
@@ -354,7 +353,7 @@ body.resizing-y { cursor: row-resize; }
   place-items: center;
   border-radius: 5px;
   color: var(--text-3);
-  font-size: 1rem;
+  font-size: var(--fs-base);
   line-height: 1;
   /* quiet until the tab is hovered/focused — fades and scales, keeps its box so nothing reflows */
   opacity: 0.35;

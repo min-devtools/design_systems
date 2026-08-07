@@ -55,9 +55,14 @@
   --pane-3: #2a364d;
   --line: rgba(17, 22, 31, 0.55);
   --line-2: rgba(17, 22, 31, 0.9);
+  /* Three-step text ramp. Every tier clears WCAG AA 4.5:1 against --pane, --text-3
+     included: it carries form labels, placeholders, table date cells and 10px kbd pills,
+     which are content, not decoration. Same rule applied across all 27 palettes in
+     themes.css — hue and saturation held, lightness walked until the tier passes, with a
+     1.15x minimum contrast step between tiers so the ramp stays three distinct tones. */
   --text: #d0d7e4;
   --text-2: #afbbd2;
-  --text-3: #4a5e84;
+  --text-3: #778cb3;
   /* brand purple: #7a3eed for filled surfaces (buttons), lighter tint where it's text on dark */
   --blue: #8196b5;
   --blue-2: #69C3FF;
@@ -122,6 +127,48 @@
   --surface-selected: color-mix(in oklab, var(--accent-primary), transparent 86%);
   --focus-ring: color-mix(in oklab, var(--accent-focus), transparent 84%);
   --modal-backdrop: color-mix(in oklab, var(--surface-app), transparent 28%);
+
+  /* Stacking order. Nothing in the app shell creates a stacking context — .app-frame and
+     .main are `position: relative` with no z-index — so every layer below competes in the
+     root context and raw numbers had drifted into an order that was simply wrong: the
+     modal and command-palette scrims sat at 24 and 20, underneath resize handles (30),
+     context menus (40) and suggestion popovers (50), which stayed painted and clickable
+     on top of the backdrop. Named layers so the order is reviewable instead of inferred.
+     A component that must sit one step above its own layer uses calc() on that layer,
+     never a fresh number. */
+  /* Geometry. Color got an alias layer, a tint rule and a doc; geometry was 21 radii,
+     21 font sizes and every integer from 2 to 16 as padding. These codify the values
+     already dominant in the shared CSS rather than inventing a new scale — the outliers
+     stay literal so they read as the exceptions they are. New code uses the tokens;
+     existing one-offs migrate when the block is touched anyway. */
+  --radius-sm: 6px;      /* chips, kbd pills, small inputs */
+  --radius-md: 8px;      /* the default: buttons, rows, cards */
+  --radius-lg: 10px;     /* panels, modals, floating surfaces */
+  --radius-pill: 999px;  /* fully rounded */
+  --radius-circle: 50%;  /* dots, avatars */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+
+  /* Type scale — rem is --ui-font-size (13px default), so every step follows the
+     user's UI-scale setting. px comments are at the default scale. */
+  --fs-xs: 0.7692rem;    /* 10px — kbd, badges */
+  --fs-sm: 0.8462rem;    /* 11px — metric labels, captions */
+  --fs-md: 0.9231rem;    /* 12px — default UI text */
+  --fs-base: 1rem;       /* 13px — editors, primary rows */
+  --fs-lg: 1.0769rem;    /* 14px — card titles */
+  --fs-xl: 1.3846rem;    /* 18px — page/section headings */
+
+  --z-raised: 2;     /* lifted above in-flow siblings */
+  --z-veil: 5;       /* section veils, loading strips */
+  --z-chrome: 30;    /* app-shell furniture: resize handles, corner toggles */
+  --z-menu: 40;      /* combobox lists, suggestion popovers, context menus */
+  --z-suggest: 50;   /* input-attached suggestions, above their own menu layer */
+  --z-overlay: 60;   /* modal + command palette scrims — above all shell chrome */
+  --z-toast: 70;     /* deliberately above modals: a toast must survive a dialog */
 }
 
 body.light {
@@ -139,10 +186,11 @@ body.light {
   --line-2: #D4DAE4;
 
   /* Typography — purple ink, not neutral black: Yaak hue carries into the text
-     scale while staying AAA on white (12.8:1 / 7.4:1; text-3 muted ~3.2:1). */
+     scale while staying AAA on white (12.8:1 / 7.4:1). --text-3 was #9B85CF at 3.2:1,
+     below AA while carrying labels and placeholders; darkened on the same hue to 4.65:1. */
   --text: #3B1D7A;
   --text-2: #6533C7;
-  --text-3: #9B85CF;
+  --text-3: #8064c2;
 
   /* --blue drives --accent (see :root); Yaak primary is purple */
   --blue: #8B33FF;

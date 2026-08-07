@@ -5,6 +5,11 @@ Every value below is the **real** value shipped in `tokens.css` (default dark
 `1rem = 13px`, `0.9231rem ≈ 12px`, `0.8462rem ≈ 11px`, `0.7692rem ≈ 10px`,
 `1.1538rem = 15px`, `1.6154rem ≈ 21px`.
 
+`tokens.css` is the source of truth — change it there first, then update the table.
+This file drifted once already (`--left-w` documented as 258px while 322px shipped,
+`--shadow` documented as `none` in light after the real value was fixed in CSS), so
+treat a mismatch as a doc bug, never as a reason to change the CSS.
+
 ## Surface layers
 
 Stacked from deepest background to raised hover. In dark, `--pane` equals
@@ -12,29 +17,36 @@ Stacked from deepest background to raised hover. In dark, `--pane` equals
 
 | Token | Dark | Light | Usage |
 |-------|------|-------|-------|
-| `--app-bg` | `#1c2433` | `#f9f8fa` | Deepest app background, editor |
-| `--window` | `#181f2c` | `#f9f8fa` | Titlebar/statusbar/workspace shell |
-| `--pane` | `#1c2433` | `#ffffff` | Sidebar, inspector, panels, cards |
-| `--pane-2` | `#253043` | `#f0ecf4` | Inputs, raised cards, hovered nav rows |
-| `--pane-3` | `#2a364d` | `#efebf2` | Stronger hover / pressed / kbd pills |
-| `--editor-bg` | `#1c2433` | `#ffffff` | Code editor / JSON tree background |
-| `--editor-fg` | `#d0d7e4` | `#3b1d7a` | Editor text |
-| `--glass` | `rgba(24,31,44,.82)` | `rgba(255,255,255,.78)` | Overlay/palette/menu backdrop |
+| `--app-bg` | `#1c2433` | `#F6F7F9` | Deepest app background, editor |
+| `--window` | `#181f2c` | `#FFFFFF` | Titlebar/statusbar/workspace shell |
+| `--pane` | `#1c2433` | `#FFFFFF` | Sidebar, inspector, panels, cards |
+| `--pane-2` | `#253043` | `#F9FAFB` | Inputs, raised cards, hovered nav rows |
+| `--pane-3` | `#2a364d` | `#ECEFF4` | Stronger hover / pressed / kbd pills |
+| `--editor-bg` | `#1c2433` | `#FFFFFF` | Code editor / JSON tree background |
+| `--editor-fg` | `#d0d7e4` | `#3B1D7A` | Editor text |
+| `--glass` | `rgba(24,31,44,.82)` | `rgba(255,255,255,.92)` | Overlay/palette/menu backdrop |
 
 ## Text
 
 | Token | Dark | Light | Usage |
 |-------|------|-------|-------|
-| `--text` | `#d0d7e4` | `#3b1d7a` | Primary text — light uses purple ink, not neutral black (12.8:1 on white, AAA) |
-| `--text-2` | `#afbbd2` | `#6533c7` | Secondary text, labels (7.4:1, AAA) |
-| `--text-3` | `#4a5e84` | `#9b85cf` | Muted, placeholders, section titles (~3.2:1, decorative/UI only) |
+| `--text` | `#d0d7e4` | `#3B1D7A` | Primary text — light uses purple ink, not neutral black (10.8:1 dark / 12.8:1 light, AAA) |
+| `--text-2` | `#afbbd2` | `#6533C7` | Secondary text, labels (8.1:1 / 7.4:1, AAA) |
+| `--text-3` | `#778cb3` | `#8064c2` | Muted, placeholders, form labels, section titles (4.6:1 / 4.7:1, **AA**) |
+
+All three tiers clear AA 4.5:1 against `--pane`, in every one of the 27 palettes.
+`--text-3` is not a decorative tier: `components.css` uses it for `.form-row label`,
+`.metric .label`, `.cell-date`, input placeholders and 10px `kbd` pills — content, and
+below 12px there is no large-text exemption. When adding or retuning a palette, hold hue
+and saturation and walk lightness until each tier passes, keeping a ≥1.15× contrast step
+between tiers so the ramp stays three distinguishable tones rather than collapsing to two.
 
 ## Borders
 
 | Token | Dark | Light | Usage |
 |-------|------|-------|-------|
-| `--line` | `rgba(17,22,31,.55)` | `#efebf2` | 1px hairline (default) |
-| `--line-2` | `rgba(17,22,31,.9)` | `#e3ddea` | Stronger 1px border |
+| `--line` | `rgba(17,22,31,.55)` | `#E0E4EB` | 1px hairline (default) |
+| `--line-2` | `rgba(17,22,31,.9)` | `#D4DAE4` | Stronger 1px border |
 
 ## Accent + status colors
 
@@ -43,13 +55,19 @@ collapses to the `#7A3EED` brand purple.
 
 | Token | Dark | Light | Usage |
 |-------|------|-------|-------|
-| `--accent` | `var(--blue)` | `#7A3EED` | Brand accent (buttons, resize glow, links) |
-| `--blue` | `#8196b5` | `#7A3EED` | Primary action, focus, syntax keys |
-| `--blue-2` | `#69C3FF` | `#7A3EED` | Primary button fill, numbers, info |
-| `--green` | `#3CEC85` | `#10b981` | Success, healthy, money, strings |
-| `--orange` | `#FF955C` | `#d97706` | Warning, pending, dirty, state |
-| `--red` | `#E35535` | `#f43f5e` | Error, danger, null |
-| `--purple` | `#F38CEC` | `#7A3EED` | IDs, SKUs, env tokens, booleans |
+| `--accent` | `var(--blue)` | `var(--blue)` | Brand accent (buttons, resize glow, links) |
+| `--blue` | `#8196b5` | `#8B33FF` | Primary action, focus, syntax keys |
+| `--blue-2` | `#69C3FF` | `#0074CC` | Primary button fill, numbers, info |
+| `--green` | `#3CEC85` | `#1D9042` | Success, healthy, money, strings |
+| `--orange` | `#FF955C` | `#B85C00` | Warning, pending, dirty, state |
+| `--red` | `#E35535` | `#D61F6B` | Error, danger, null |
+| `--purple` | `#F38CEC` | `#A855F7` | IDs, SKUs, env tokens, booleans |
+
+`body.light` also defines `--yellow: #AD8200`, which the dark base does not.
+These carry UI meaning (dots, badges, rails) as well as syntax, so each clears the
+3:1 non-text minimum against `--pane` in every palette — several editor-theme ports
+originally sat near 2:1 here, because in their source themes the color only ever
+landed on syntax, never on a solid UI fill.
 
 ## Connection colors
 
@@ -87,8 +105,8 @@ before colors existed.
 
 | Token | Dark | Light |
 |-------|------|-------|
-| `--row` | `rgba(255,255,255,.025)` | `#ffffff` |
-| `--row-alt` | `rgba(255,255,255,.04)` | `#f9f8fa` |
+| `--row` | `rgba(255,255,255,.025)` | `rgba(19,24,32,.018)` |
+| `--row-alt` | `rgba(255,255,255,.04)` | `rgba(19,24,32,.035)` |
 
 ## Semantic aliases
 
@@ -123,9 +141,23 @@ Theme-agnostic names that map onto the raw tokens above. Prefer these in new cod
 | `--syntax-constant` | `--purple` | `#be185d` |
 | `--syntax-tag` | `--orange` | `#b45309` |
 
-`tokens.css` owns these fallbacks (JSON trees, quick-query code, any CSS-rendered
-syntax). `syntax-themes.css` overrides them per selected editor theme, and
-`themeContract.ts` maps the computed values into Monaco — so all three stay in sync.
+`tokens.css` is the only file **in this repo** that defines these. The 27 palettes in
+`themes.css` override the raw color tokens but deliberately carry no `--syntax-*` of
+their own, so on every alternate palette the syntax colors fall through to the values
+above. `themeContract.ts` maps whatever computes out into Monaco.
+
+An app may add a per-theme override locally — `git_min/src/styles/syntax-themes.css` is
+one, generated from `netherize_editor/config/themes/*.toml` and imported after
+`themes.css`. That file is **app-local, not part of this design system**; the other six
+apps ship without it and rely on the fallbacks above.
+
+That leaves one load-bearing detail: the light palettes get the contrast-tuned light
+syntax colors purely because `body.light` (in `tokens.css`) and `body[data-theme="…"]`
+(in `themes.css`) have **identical specificity** (0-1-1), so the winner is decided by
+import order — `tokens.css` before `themes.css`. `themes.css` wins for the raw colors it
+redefines; `body.light` keeps `--syntax-*`, `--shadow`, `--control-*`, `--selection` and
+`--focus`, which no palette touches. Swap those two imports and every light theme
+silently renders dark-tuned syntax on a white editor. Apps must import in that order.
 
 ## Highlight
 
@@ -176,12 +208,49 @@ color state changes stay legible. Looping progress indicators (`.loading-bar spa
   `documentElement`, which shadows the `--font-body-default` stack.
 - Section/group titles: `text-transform: uppercase; letter-spacing: .06em; color: var(--text-3)`.
 
+### Type scale
+
+`rem` resolves against `--ui-font-size` (13px default), so every step follows the user's
+UI-scale setting. px values below are at the default scale.
+
+| Token | Value | px | Usage |
+|-------|-------|----|-------|
+| `--fs-xs` | `0.7692rem` | 10 | `kbd` pills, badges, tree summaries |
+| `--fs-sm` | `0.8462rem` | 11 | Metric labels, captions |
+| `--fs-md` | `0.9231rem` | 12 | **Default UI text** — labels, rows, buttons |
+| `--fs-base` | `1rem` | 13 | Editors, primary rows |
+| `--fs-lg` | `1.0769rem` | 14 | Card titles |
+| `--fs-xl` | `1.3846rem` | 18 | Page/section headings |
+
+Never `font-size: <n>px` — a px literal bypasses `--ui-font-size` and stops responding to
+the UI-scale setting.
+
+## Geometry
+
+Color got an alias layer, a tint rule and this doc; geometry had 21 distinct radii, 21
+font sizes and every integer from 2 to 16 as padding. These tokens **codify the values
+already dominant** in the shared CSS rather than introduce a new scale. Outliers stay
+literal so they read as the exceptions they are; migrate them when you touch the block
+anyway.
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--radius-sm` | `6px` | Chips, `kbd` pills, small inputs |
+| `--radius-md` | `8px` | **Default** — buttons, rows, cards |
+| `--radius-lg` | `10px` | Panels, modals, floating surfaces |
+| `--radius-pill` | `999px` | Fully rounded |
+| `--radius-circle` | `50%` | Dots, avatars |
+| `--space-1` … `--space-5` | `4 / 8 / 12 / 16 / 24px` | Padding, gap |
+
+Spacing is not yet migrated — the tokens exist for new code, the literals stay until the
+surrounding rule changes.
+
 ## Layout dimensions
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--left-w` | `258px` | Sidebar width (`body.compact` → 230px) |
-| `--right-w` | `328px` | Inspector width (`body.compact` → 300px) |
+| `--left-w` | `322px` | Sidebar width (`body.compact` → 230px) |
+| `--right-w` | `410px` | Inspector width (`body.compact` → 300px) |
 | `--query-top` | `48vh` | Query editor default height |
 | `--request-top` | `48%` | Request editor split |
 
@@ -192,7 +261,7 @@ Shell grid: `.app-frame` rows are `42px 1fr 28px` (titlebar / body / statusbar).
 
 | Token | Value |
 |-------|-------|
-| `--shadow` | `0 18px 60px color-mix(in oklab, var(--surface-app), transparent 45%)` (dark) / `none` (light) |
+| `--shadow` | `0 18px 60px color-mix(in oklab, var(--surface-app), transparent 45%)` (dark) / `0 18px 48px rgba(59,26,110,.12), 0 2px 8px rgba(59,26,110,.08)` (light) — must stay a full `box-shadow` value, a bare color makes `box-shadow: var(--shadow)` invalid and silently drops elevation on every floating pill |
 | `--focus-ring` | `color-mix(in oklab, var(--accent-focus), transparent 84%)` |
 | `--surface-selected` | `color-mix(in oklab, var(--accent-primary), transparent 86%)` |
 | `--modal-backdrop` | `color-mix(in oklab, var(--surface-app), transparent 28%)` |
@@ -200,6 +269,27 @@ Shell grid: `.app-frame` rows are `42px 1fr 28px` (titlebar / body / statusbar).
 **The tint rule:** hover/selection/soft-fill states are always
 `color-mix(in oklab, <token>, transparent N%)` — never a new hex. Common Ns:
 `84–90%` for soft fills, `62–74%` for borders, `82–86%` for glows/rings.
+
+## Stacking order
+
+Nothing in the app shell creates a stacking context — `.app-frame` and `.main` are
+`position: relative` with no `z-index` — so every layer here competes in the root
+context. Use the token, never a fresh number; when a component must sit one step above
+its own layer, `calc()` on that layer.
+
+| Token | Value | Layer |
+|-------|-------|-------|
+| `--z-raised` | `2` | Lifted above in-flow siblings |
+| `--z-veil` | `5` | Section veils, loading strips (`+1` for the bar over the veil) |
+| `--z-chrome` | `30` | App-shell furniture: resize handles, corner toggles (`+5`) |
+| `--z-menu` | `40` | Combobox lists, context menus, floating popovers |
+| `--z-suggest` | `50` | Input-attached suggestions, above their own menu layer |
+| `--z-overlay` | `60` | Modal + command-palette scrims — above all shell chrome |
+| `--z-toast` | `70` | Above modals by design: a toast must survive a dialog |
+
+The scrims were previously `24` (`.modal`) and `20` (`.command`), i.e. *below* resize
+handles, context menus and suggestion popovers, all of which stayed painted and clickable
+over the backdrop. If you add a layer, place it in this table first.
 
 ## Themes
 

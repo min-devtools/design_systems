@@ -83,7 +83,7 @@ button { color: inherit; cursor: default; }
 }
 
 /* keyboard-only focus ring; :where keeps specificity 0 so any component style wins */
-:where(button, select, a, [tabindex]):focus-visible {
+:where(button, select, a, input, textarea, [tabindex]):focus-visible {
   outline: 2px solid color-mix(in oklab, var(--accent-focus, var(--blue)), transparent 40%);
   outline-offset: 1px;
 }
