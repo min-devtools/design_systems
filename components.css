@@ -607,6 +607,28 @@ th {
   font-weight: 600;
 }
 
+/* sortable header cell (SortTh): a real button so keyboards can sort too */
+.sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  width: 100%;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+
+.sort-btn:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent-focus, var(--blue)), transparent 40%);
+  outline-offset: 2px;
+}
+
+.sort-arrow { color: var(--blue); font-size: 0.7692rem; }
+
 tr:nth-child(even) td { background: var(--row-alt); }
 
 tr:nth-child(odd) td { background: var(--row); }
@@ -694,6 +716,17 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   box-shadow: inset 0 0 0 1px var(--accent-soft-strong);
 }
 
+/* the hit ⏎ last stepped to — one solid accent among the soft ones, so the eye
+   lands on it without the other matches losing their highlight.
+   Two selectors because the viewers differ: the plain trees tag the <mark>
+   itself, the virtualised one only knows which row is current. */
+.json-tree mark.match-current,
+.json-tree-line.match-current mark {
+  background: var(--accent);
+  color: var(--window);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
 /* ── Interactive JSON tree viewer (right-dock payload/value inspector) ───── */
 .json-dock {
   display: flex;
@@ -764,7 +797,29 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   background: var(--pane-2);
 }
 
-.json-tree-search .match-count {
+/* ▲/▼ step to the previous/next hit — same 24×20 slot as the Aa toggle */
+.json-tree-search .find-step {
+  width: 24px;
+  height: 20px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-3);
+  cursor: default;
+}
+.json-tree-search .find-step:hover:not(:disabled) { color: var(--text); background: var(--pane-3); }
+.json-tree-search .find-step:disabled { opacity: 0.4; }
+
+/* n/total beside a find box — fixed width so stepping through hits never reflows the row */
+.json-tree-search .match-count,
+.json-view-head .match-count,
+.conflict-bar .match-count {
+  flex: none;
+  min-width: 44px;
+  text-align: right;
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   color: var(--text-3);
@@ -893,6 +948,10 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
   position: fixed;
   z-index: var(--z-menu);
   min-width: 180px;
+  /* fixed elements shrink to the space left of the viewport edge — size by the
+     labels instead and let the JS clamp slide the box back inward */
+  width: max-content;
+  max-width: min(340px, calc(100vw - 24px));
   padding: 6px;
   background: var(--glass);
   backdrop-filter: blur(20px) saturate(160%);
@@ -1116,6 +1175,9 @@ tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--blue); }
 }
 
 .cmd-list { padding: 8px; max-height: 380px; overflow: auto; }
+
+/* "Recents" / "Commands" section header between palette rows */
+.cmd-group { padding: 8px 10px 3px; color: var(--text-3); font-size: 0.7692rem; letter-spacing: 0.06em; text-transform: uppercase; }
 
 .cmd {
   display: grid;
@@ -1652,6 +1714,12 @@ select:focus {
   white-space: nowrap;
 }
 
+.combobox-empty {
+  padding: 8px 10px;
+  color: var(--text-3);
+  font-size: 0.9231rem;
+}
+
 .combobox-hint {
   color: var(--text-3);
   font: 0.8462rem/1.2 var(--font-mono);
@@ -1902,3 +1970,276 @@ td > span {
 .settings-view .theme-grid { margin: 4px 0 6px 40px; }
 .theme-picker-scroll { max-height: 50vh; overflow: auto; margin: 4px -4px 0; padding: 4px; }
 .prompt-dialog:has(.theme-picker-scroll) { width: min(620px, calc(100vw - 48px)); }
+
+/* ---------- connection setup wizard ----------
+   Numbered-step setup screen (first used by db_min's New Connection view;
+   siblings can adopt for their own connection/create forms). Apps that
+   already define create-* locally in views.css keep their local override
+   because views.css loads after this file. */
+
+.create-head {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in oklab, var(--window), var(--app-bg) 3%);
+}
+
+.create-head-title { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+.create-head-title h2 { margin: 0; font-size: 1.3846rem; letter-spacing: -0.01em; color: var(--text); }
+
+.create-head-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  color: var(--blue);
+  background: color-mix(in oklab, var(--blue), transparent 86%);
+}
+
+.create-sub { display: block; color: var(--text-3); font-size: 0.9231rem; margin-top: 2px; }
+
+.create-kicker {
+  color: var(--blue);
+  font: 0.9231rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.create-layout {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: 14px;
+  padding: 14px;
+  align-items: start;
+}
+
+.create-col { min-width: 0; display: grid; gap: 14px; align-content: start; }
+
+.create-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
+  background: color-mix(in oklab, var(--pane), transparent 4%);
+  box-shadow: var(--shadow);
+}
+
+.create-card > h3 {
+  margin: 0;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 1rem;
+}
+
+.create-form {
+  min-height: 0;
+  overflow: auto;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.card-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.card-step h3 { margin: 0; padding: 0; border: 0; font-size: 1rem; color: var(--text); }
+
+.card-sub { display: block; color: var(--text-3); font-size: 0.8462rem; margin-top: 2px; }
+
+.step-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  color: var(--text-2);
+  background: var(--pane-2);
+  font: 0.8077rem/1 var(--font-mono);
+}
+
+.engine-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 14px;
+}
+
+.engine-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--pane-2);
+  color: var(--text-2);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-ui), background var(--motion-fast) var(--ease-ui), color var(--motion-fast) var(--ease-ui);
+}
+
+.engine-card:hover { border-color: var(--line-2); background: var(--pane-3); }
+
+.engine-logo { width: 20px; height: 20px; object-fit: contain; flex: none; }
+
+.create-head-icon .engine-logo { width: 22px; height: 22px; }
+
+.engine-card.active {
+  border-color: var(--blue);
+  color: var(--text);
+  background: color-mix(in oklab, var(--blue) 12%, var(--pane-2));
+  box-shadow: 0 0 0 1px var(--blue);
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px 14px;
+  padding: 14px;
+}
+
+.field { display: grid; gap: 5px; min-width: 0; align-content: start; }
+
+.field.wide, .field-grid .connection-note { grid-column: 1 / -1; }
+
+.field-label { color: var(--text-2); font-size: 0.8846rem; font-weight: 600; }
+
+.field-hint { color: var(--text-3); font-size: 0.8077rem; line-height: 1.4; }
+
+/* same recipe as .form-row input/select — one control look across the family */
+.field input, .field select {
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  color: var(--text);
+  background: var(--pane-2);
+  border: 1px solid var(--line-2);
+  border-radius: 9px;
+  padding: 0 10px;
+  outline: none;
+}
+
+.field input:focus, .field select:focus {
+  border-color: color-mix(in oklab, var(--blue), transparent 35%);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--blue), transparent 86%);
+}
+
+.connection-note {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--blue), transparent 91%);
+  color: var(--text-2);
+  font-size: 0.9231rem;
+  line-height: 1.55;
+}
+
+.connection-note strong { color: var(--text); }
+
+.check-list { display: grid; gap: 8px; padding: 14px; }
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--pane-2);
+}
+
+.check-label { flex: 1; min-width: 0; color: var(--text); font-size: 0.9231rem; }
+
+.check-badge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font: 0.7692rem/1.2 var(--font-mono);
+}
+
+.check-badge.idle { color: var(--text-3); background: var(--pane-3); }
+.check-badge.run { color: var(--blue); background: color-mix(in oklab, var(--blue), transparent 86%); }
+.check-badge.ok { color: var(--green); background: color-mix(in oklab, var(--green), transparent 86%); }
+.check-badge.err { color: var(--red); background: color-mix(in oklab, var(--red), transparent 86%); }
+
+.check-output-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  color: var(--text-2);
+  font-size: 0.8846rem;
+  font-weight: 600;
+}
+
+.check-output {
+  margin: 8px 14px 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--editor-bg);
+  color: var(--green);
+  font: 0.8462rem/1.7 var(--font-mono);
+  overflow: auto;
+  min-height: 96px;
+  max-height: 280px;
+  counter-reset: check-line;
+  user-select: text;
+  cursor: text;
+}
+
+.check-line { display: flex; gap: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.check-line::before {
+  counter-increment: check-line;
+  content: counter(check-line);
+  flex: none;
+  min-width: 1.5em;
+  text-align: right;
+  color: var(--text-3);
+}
+
+.check-line.err { color: var(--red); }
+.check-line.dim { color: var(--text-2); }
+
+.conn-summary {
+  display: grid;
+  gap: 6px;
+  margin: 0 14px 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--pane-2);
+}
+
+.conn-summary-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 8px;
+  color: var(--text-3);
+  font: 0.8846rem/1.5 var(--font-mono);
+}
+
+.conn-summary-row b { color: var(--text); font-weight: 500; overflow-wrap: anywhere; }

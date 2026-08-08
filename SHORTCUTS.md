@@ -25,13 +25,19 @@ Rules:
   `onKeyDown`: WebKit in the Tauri webview does not focus rows on click.
 - Bail out when an input is focused (`INPUT` / `TEXTAREA` / `isContentEditable` /
   `.monaco-editor`) and when a dialog is open.
+- The app-level shortcut handler (the `App.tsx` keydown listener) starts with
+  `if (e.defaultPrevented) return;`. Monaco's own `addCommand` bindings (`⌘↵` in
+  a query/body editor) call `preventDefault()` before the event reaches
+  `document`; without the guard the same shortcut fires twice and the request is
+  sent twice. View-local listeners only need the guard when they bind a key
+  Monaco also binds.
 
 ## Global
 
 | Key | Action |
 |---|---|
 | `⌘K` | Command palette |
-| `⌘N` | New item (request / source / key / query / topic messages) |
+| `⌘N` | New item (request / source / key / query / topic messages). **Exception:** where Monaco runs with Vim mode, `Ctrl-N` belongs to Vim — bail out when focus is inside `.monaco-editor` rather than dropping `ctrlKey`, or Windows/Linux is left with no binding at all |
 | `⌘↵` | Run / send / reload the active tab |
 | `⌘S` | Save the active tab (where saving is a distinct step) |
 | `⌘B` | Toggle left sidebar |

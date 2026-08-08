@@ -174,7 +174,8 @@ column for the dot and moves the truncation rule to the label's new position.
 | `.page-size` | 24px compact mono select |
 | `.form-row` | `136px 1fr` label+input grid; focus = blue border + 3px ring |
 | `.check-row` | `18px 1fr auto` checkbox row, bordered |
-| `.combobox` + `.combobox-list` / `-item` / `-value` / `-hint` | Autocomplete dropdown on glass |
+| `.combobox` + `.combobox-list` / `-item` / `-value` / `-hint` / `-empty` | Autocomplete dropdown on glass |
+| `.sort-btn` + `.sort-arrow` | Sortable `<th>` (SortTh): a real button inside the cell + `aria-sort`, so keyboards can sort too |
 | `select` (bare) | Every native `<select>` normalized to a combobox-style trigger: OS chevron replaced with a themed chevron; keeps native popup + a11y |
 | `.env-input` + `.env-input-token` / `-overlay` / `-suggestions` | Input that renders `{{env}}` vars as purple pills |
 | `.row-check` | 15px checkbox, `accent-color: var(--blue)` |
@@ -192,7 +193,7 @@ column for the dot and moves the truncation rule to the label's new position.
 
 | Class | Look |
 |-------|------|
-| `.badge` | Mono pill, `--pane-3`. Modifiers `.green` `.yellow` `.red` `.idle` |
+| `.badge` | Mono pill, `--pane-3`. Modifiers `.green` `.yellow` `.red` `.blue` `.purple` `.idle` — `BadgeTone` lists all six in every app |
 | `.type-pill` | 20px bordered mono chip (a field type) |
 | `.field-chip` | 20px blue-tinted mono chip |
 | `.path-chip` | 24px removable blue-tint JSON-path pill |
@@ -295,7 +296,9 @@ in the right inspector. Standard markup:
     <Icon name="search" />
     <input placeholder="Find in value…" />
     <button class="case-toggle">Aa</button>   <!-- case-sensitive toggle -->
-    <span class="match-count">3/12</span>
+    <span class="match-count">3/12</span>     <!-- active hit / total hits -->
+    <button class="find-step"><Icon name="chevron-up" /></button>
+    <button class="find-step"><Icon name="chevron-down" /></button>
   </div>
 
   <div class="json-dock-head">
@@ -327,6 +330,18 @@ in the right inspector. Standard markup:
   case-insensitive; the `Aa` button toggles case-sensitive. Matches are
   highlighted with `<mark>` inside the tree; ancestor nodes auto-expand so the
   highlight is visible. The tree never hides non-matching nodes.
+- Match navigation: `↵` steps to the next hit, `⇧↵` the previous, both wrapping
+  at the ends; the `▲`/`▼` buttons do the same and are `disabled` at zero hits.
+  The active hit gets `.match-current` (solid `--accent` against the soft
+  `<mark>`s) and is scrolled to centre. `.match-count` shows `n/total`, or `0/0`
+  when the query misses — never blank, so "no matches" reads as an answer rather
+  than a hang. The counter is min-width'd and tabular so stepping doesn't reflow.
+  Plain trees resolve hits from the rendered `<mark>`s — that is the whole of
+  `ui/useMarkNav.ts`, so the counter can never disagree with what is highlighted.
+  The virtualised viewer (`preview_min`) can't: only the visible window is in the
+  DOM, so it resolves hits from row indexes via `matchingRows()` and scrolls by
+  arithmetic. `.match-count` is the hit position, **not** a field tally — the
+  `n fields` / `n matches` summary belongs in `.json-dock-head`.
 - Expand/collapse: each container node has a `.json-tree-toggle` with a
   `chevron-right` icon that rotates `90deg` when `aria-expanded="true"`.
   Expand-all / collapse-all use `chevrons-down` / `chevrons-up`.
@@ -362,6 +377,7 @@ buttons.
   <div class="palette">
     <input placeholder="Type a command…" />
     <div class="cmd-list">
+      <div class="cmd-group">Recents</div><!-- section header between rows -->
       <div class="cmd active"><!--icon--><span>New request</span><kbd>⌘N</kbd></div>
     </div>
   </div>
@@ -440,7 +456,9 @@ verbatim; don't invent new durations/springs per component.
 **Shared components** (mirror per-app, JS isn't symlinked like the CSS — only `tokens/themes/base/
 layout/components.css` are): `ui/ContextMenu.tsx` (generic `{icon,label,kbd,danger,onClick}[]` menu,
 used for every right-click menu in an app) and `ui/MiniTabs.tsx` (the pill tab-switcher, e.g. flow
-dock's Step detail/Step Result). `ui/ToolButton.tsx` gets a `whileTap` wrapper and an `Omit<...,
+dock's Step detail/Step Result). `MiniTabs` is byte-identical across all seven apps and ships the
+ARIA tabs pattern — `role="tablist"`/`role="tab"`/`aria-selected`, a roving `tabIndex` so the strip is
+one Tab stop, and ←/→/↑/↓ to move within it. `ui/ToolButton.tsx` gets a `whileTap` wrapper and an `Omit<...,
 "onDrag"|"onDragStart"|"onDragEnd"|"onAnimationStart"|"onAnimationEnd">` on its props type — those
 names collide with Motion's own gesture props. The same collision hits any `motion.div`/`motion.button`
 that also needs native HTML5 drag (tab reorder, sidebar drag-and-drop): type the handler `(e: any)`
@@ -482,6 +500,25 @@ right-aligned.
 | `.shortcut-grid` / `.shortcut-row` | 2-col shortcut list, label left, `.kbd` right |
 
 Canonical Appearance card order: Theme → Interface font size (ToolButton `− / Npx / +` stepper; clicking the value resets) → Interface font family → Editor font family → Compact density → Vim mode. App-specific cards (AI provider, GitHub, Data) follow after.
+
+## Connection setup wizard
+
+Numbered-step setup screen (first used by db_min's New Connection view). Header bar + two-column card layout; apps that already define `create-*` locally in views.css keep their override (views.css loads last).
+
+`.create-head` (54px bar: `.create-head-title` = `.create-head-icon` 38px tile + `<h2>` + `.create-sub`, actions right) → `.create-layout` (2-col grid, 1.08fr/0.92fr) → `.create-col` (stacked cards) → `.create-card`s.
+
+| Class | Look |
+|-------|------|
+| `.card-step` | Card header: `.step-num` circled number + `<h3>` + optional `.card-sub` |
+| `.step-num` | 22px mono-font circled number chip |
+| `.engine-cards` / `.engine-card` | Auto-fit grid of icon+label picker buttons; `.active` = blue ring |
+| `.field-grid` | 2-col form grid; `.field.wide` spans both |
+| `.field` | Label-above input: `.field-label` + control + muted `.field-hint` |
+| `.connection-note` | Blue-tinted callout (`<strong>` title + body), full-width in `.field-grid` |
+| `.check-list` / `.check-item` | Validation rows: `.step-num` + `.check-label` + `.check-badge` |
+| `.check-badge` | Pill status: `.idle` `.run` (blue) `.ok` (green) `.err` (red) |
+| `.check-output` | Terminal-style `<pre>`: green mono text, numbered `.check-line` spans (`.err` red, `.dim` muted) via CSS counter |
+| `.conn-summary` / `.conn-summary-row` | KV summary card, `110px 1fr` mono rows |
 
 ## Utility
 
